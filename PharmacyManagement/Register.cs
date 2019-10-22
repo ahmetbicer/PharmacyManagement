@@ -37,7 +37,8 @@ namespace PharmacyManagement
         private void button3_Click(object sender, EventArgs e)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = @"insert into pharmacy (Name,Email,Password) values(@Name,@Email,@Password) ";
+            string query = @"insert into pharmacy (Name,Email,Password) values(@Name,@Email,@Password); 
+                                create table Pharmacy_B( ID int );";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", name.Text));
             cmd.Parameters.Add(new SQLiteParameter("@Email", email.Text));

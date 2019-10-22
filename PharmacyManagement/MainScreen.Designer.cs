@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
@@ -48,9 +48,13 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.CurrentMedicines = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.AddMedicine = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.usage = new System.Windows.Forms.TextBox();
             this.approval = new System.Windows.Forms.Label();
@@ -62,6 +66,18 @@
             this.button3 = new System.Windows.Forms.Button();
             this.report = new System.Windows.Forms.TextBox();
             this.stock = new System.Windows.Forms.TextBox();
+            this.UpdateMedicine = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage7 = new System.Windows.Forms.TabPage();
@@ -85,7 +101,6 @@
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.ımageList1 = new System.Windows.Forms.ImageList(this.components);
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl4.SuspendLayout();
@@ -95,9 +110,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            this.CurrentMedicines.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            this.tabPage6.SuspendLayout();
+            this.AddMedicine.SuspendLayout();
+            this.UpdateMedicine.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -179,14 +195,14 @@
             this.dataGridView1.ColumnHeadersHeight = 29;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.ColumnHeadersVisible = false;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.MenuBar;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.MenuBar;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle17;
             this.dataGridView1.Location = new System.Drawing.Point(104, 86);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(0);
             this.dataGridView1.Name = "dataGridView1";
@@ -194,8 +210,8 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridView1.RowTemplate.Height = 40;
             this.dataGridView1.RowTemplate.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(226, 183);
@@ -224,14 +240,14 @@
             this.dataGridView2.ColumnHeadersHeight = 29;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView2.ColumnHeadersVisible = false;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.MenuBar;
-            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.MenuBar;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle19;
             this.dataGridView2.Location = new System.Drawing.Point(456, 248);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(0);
             this.dataGridView2.Name = "dataGridView2";
@@ -239,8 +255,8 @@
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle20;
             this.dataGridView2.RowTemplate.Height = 40;
             this.dataGridView2.RowTemplate.ReadOnly = true;
             this.dataGridView2.Size = new System.Drawing.Size(226, 183);
@@ -259,26 +275,66 @@
             // 
             // tabControl2
             // 
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Controls.Add(this.tabPage6);
+            this.tabControl2.Controls.Add(this.CurrentMedicines);
+            this.tabControl2.Controls.Add(this.AddMedicine);
+            this.tabControl2.Controls.Add(this.UpdateMedicine);
             this.tabControl2.Location = new System.Drawing.Point(3, 3);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(1132, 675);
             this.tabControl2.TabIndex = 0;
             // 
-            // tabPage5
+            // CurrentMedicines
             // 
-            this.tabPage5.Controls.Add(this.textBox1);
-            this.tabPage5.Controls.Add(this.dataGridView3);
-            this.tabPage5.Location = new System.Drawing.Point(4, 29);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1124, 642);
-            this.tabPage5.TabIndex = 0;
-            this.tabPage5.Text = "Current Medicines";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            this.tabPage5.MouseEnter += new System.EventHandler(this.tabPage5_MouseEnter);
+            this.CurrentMedicines.Controls.Add(this.button6);
+            this.CurrentMedicines.Controls.Add(this.button5);
+            this.CurrentMedicines.Controls.Add(this.button4);
+            this.CurrentMedicines.Controls.Add(this.textBox1);
+            this.CurrentMedicines.Controls.Add(this.dataGridView3);
+            this.CurrentMedicines.Location = new System.Drawing.Point(4, 29);
+            this.CurrentMedicines.Name = "CurrentMedicines";
+            this.CurrentMedicines.Padding = new System.Windows.Forms.Padding(3);
+            this.CurrentMedicines.Size = new System.Drawing.Size(1124, 642);
+            this.CurrentMedicines.TabIndex = 0;
+            this.CurrentMedicines.Text = "Current Medicines";
+            this.CurrentMedicines.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(746, 24);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(87, 40);
+            this.button6.TabIndex = 6;
+            this.button6.Text = "update";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(649, 24);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(91, 40);
+            this.button5.TabIndex = 5;
+            this.button5.Text = "reload";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(839, 24);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(87, 40);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "delete";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(190, 38);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(115, 26);
+            this.textBox1.TabIndex = 3;
             // 
             // dataGridView3
             // 
@@ -289,14 +345,14 @@
             this.dataGridView3.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridView3.ColumnHeadersHeight = 29;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.MenuBar;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView3.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.MenuBar;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView3.DefaultCellStyle = dataGridViewCellStyle21;
             this.dataGridView3.Location = new System.Drawing.Point(190, 75);
             this.dataGridView3.Margin = new System.Windows.Forms.Padding(0);
             this.dataGridView3.Name = "dataGridView3";
@@ -304,34 +360,34 @@
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.RowHeadersWidth = 51;
             this.dataGridView3.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridView3.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView3.RowsDefaultCellStyle = dataGridViewCellStyle22;
             this.dataGridView3.RowTemplate.Height = 40;
             this.dataGridView3.RowTemplate.ReadOnly = true;
             this.dataGridView3.Size = new System.Drawing.Size(737, 531);
             this.dataGridView3.TabIndex = 2;
             this.dataGridView3.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellContentClick);
             // 
-            // tabPage6
+            // AddMedicine
             // 
-            this.tabPage6.Controls.Add(this.label5);
-            this.tabPage6.Controls.Add(this.usage);
-            this.tabPage6.Controls.Add(this.approval);
-            this.tabPage6.Controls.Add(this.label4);
-            this.tabPage6.Controls.Add(this.name);
-            this.tabPage6.Controls.Add(this.label3);
-            this.tabPage6.Controls.Add(this.label2);
-            this.tabPage6.Controls.Add(this.label1);
-            this.tabPage6.Controls.Add(this.button3);
-            this.tabPage6.Controls.Add(this.report);
-            this.tabPage6.Controls.Add(this.stock);
-            this.tabPage6.Location = new System.Drawing.Point(4, 29);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(1124, 642);
-            this.tabPage6.TabIndex = 1;
-            this.tabPage6.Text = "Add Medicine";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.AddMedicine.Controls.Add(this.label5);
+            this.AddMedicine.Controls.Add(this.usage);
+            this.AddMedicine.Controls.Add(this.approval);
+            this.AddMedicine.Controls.Add(this.label4);
+            this.AddMedicine.Controls.Add(this.name);
+            this.AddMedicine.Controls.Add(this.label3);
+            this.AddMedicine.Controls.Add(this.label2);
+            this.AddMedicine.Controls.Add(this.label1);
+            this.AddMedicine.Controls.Add(this.button3);
+            this.AddMedicine.Controls.Add(this.report);
+            this.AddMedicine.Controls.Add(this.stock);
+            this.AddMedicine.Location = new System.Drawing.Point(4, 29);
+            this.AddMedicine.Name = "AddMedicine";
+            this.AddMedicine.Padding = new System.Windows.Forms.Padding(3);
+            this.AddMedicine.Size = new System.Drawing.Size(1124, 642);
+            this.AddMedicine.TabIndex = 1;
+            this.AddMedicine.Text = "Add Medicine";
+            this.AddMedicine.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -439,6 +495,133 @@
             this.stock.Name = "stock";
             this.stock.Size = new System.Drawing.Size(314, 30);
             this.stock.TabIndex = 19;
+            // 
+            // UpdateMedicine
+            // 
+            this.UpdateMedicine.Controls.Add(this.label7);
+            this.UpdateMedicine.Controls.Add(this.textBox2);
+            this.UpdateMedicine.Controls.Add(this.label14);
+            this.UpdateMedicine.Controls.Add(this.label15);
+            this.UpdateMedicine.Controls.Add(this.textBox3);
+            this.UpdateMedicine.Controls.Add(this.label16);
+            this.UpdateMedicine.Controls.Add(this.label17);
+            this.UpdateMedicine.Controls.Add(this.label18);
+            this.UpdateMedicine.Controls.Add(this.button7);
+            this.UpdateMedicine.Controls.Add(this.textBox4);
+            this.UpdateMedicine.Controls.Add(this.textBox5);
+            this.UpdateMedicine.Location = new System.Drawing.Point(4, 29);
+            this.UpdateMedicine.Name = "UpdateMedicine";
+            this.UpdateMedicine.Size = new System.Drawing.Size(1124, 642);
+            this.UpdateMedicine.TabIndex = 2;
+            this.UpdateMedicine.Text = "Update Medicine";
+            this.UpdateMedicine.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label7.Location = new System.Drawing.Point(341, 365);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(57, 20);
+            this.label7.TabIndex = 39;
+            this.label7.Text = "Usage";
+            // 
+            // textBox2
+            // 
+            this.textBox2.AcceptsTab = true;
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textBox2.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.textBox2.Location = new System.Drawing.Point(416, 358);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(314, 30);
+            this.textBox2.TabIndex = 32;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.LimeGreen;
+            this.label14.Location = new System.Drawing.Point(412, 187);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(0, 20);
+            this.label14.TabIndex = 37;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label15.Location = new System.Drawing.Point(349, 217);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(53, 20);
+            this.label15.TabIndex = 36;
+            this.label15.Text = "Name";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textBox3.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.textBox3.Location = new System.Drawing.Point(416, 210);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(314, 30);
+            this.textBox3.TabIndex = 29;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label16.Location = new System.Drawing.Point(341, 319);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(59, 20);
+            this.label16.TabIndex = 35;
+            this.label16.Text = "Report";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label17.Location = new System.Drawing.Point(349, 267);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(51, 20);
+            this.label17.TabIndex = 34;
+            this.label17.Text = "Stock";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label18.Location = new System.Drawing.Point(476, 153);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(203, 29);
+            this.label18.TabIndex = 33;
+            this.label18.Text = "Update Medicine";
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(577, 399);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(153, 41);
+            this.button7.TabIndex = 38;
+            this.button7.Text = "Update";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // textBox4
+            // 
+            this.textBox4.AcceptsTab = true;
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textBox4.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.textBox4.Location = new System.Drawing.Point(416, 310);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(314, 30);
+            this.textBox4.TabIndex = 31;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textBox5.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.textBox5.Location = new System.Drawing.Point(416, 260);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(314, 30);
+            this.textBox5.TabIndex = 30;
             // 
             // tabPage4
             // 
@@ -705,13 +888,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(967, 108);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(115, 26);
-            this.textBox1.TabIndex = 3;
-            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -732,11 +908,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
+            this.CurrentMedicines.ResumeLayout(false);
+            this.CurrentMedicines.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage6.PerformLayout();
+            this.AddMedicine.ResumeLayout(false);
+            this.AddMedicine.PerformLayout();
+            this.UpdateMedicine.ResumeLayout(false);
+            this.UpdateMedicine.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
@@ -755,8 +933,8 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage CurrentMedicines;
+        private System.Windows.Forms.TabPage AddMedicine;
         private System.Windows.Forms.TabControl tabControl4;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TabPage tabPage10;
@@ -797,5 +975,20 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox pat_name;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.TabPage UpdateMedicine;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox5;
     }
 }

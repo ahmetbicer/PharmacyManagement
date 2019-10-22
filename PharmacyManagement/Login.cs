@@ -28,8 +28,8 @@ namespace PharmacyManagement
                     conn.Open();
                     using (var cmd = new SQLiteCommand("SELECT Email,Password FROM pharmacy WHERE Email=@Email AND Password = @Password", conn))
                     {
-                        cmd.Parameters.AddWithValue("@Email", textBox1.Text.Trim());
-                        cmd.Parameters.AddWithValue("@Password", textBox2.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Email", textBox1.Text);
+                        cmd.Parameters.AddWithValue("@Password", textBox2.Text);
                         using (var reader = cmd.ExecuteReader())
                         {
                             var count = 0;
