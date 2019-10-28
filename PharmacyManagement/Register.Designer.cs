@@ -37,7 +37,7 @@
             this.password = new System.Windows.Forms.TextBox();
             this.email = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.name = new System.Windows.Forms.TextBox();
+            this.username = new System.Windows.Forms.TextBox();
             this.approval = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -117,20 +117,20 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.Location = new System.Drawing.Point(374, 293);
+            this.label4.Location = new System.Drawing.Point(341, 293);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 20);
+            this.label4.Size = new System.Drawing.Size(86, 20);
             this.label4.TabIndex = 16;
-            this.label4.Text = "Name";
+            this.label4.Text = "Username";
             // 
-            // name
+            // username
             // 
-            this.name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.name.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.name.Location = new System.Drawing.Point(441, 286);
-            this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(314, 30);
-            this.name.TabIndex = 5;
+            this.username.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.username.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.username.Location = new System.Drawing.Point(441, 286);
+            this.username.Name = "username";
+            this.username.Size = new System.Drawing.Size(314, 30);
+            this.username.TabIndex = 5;
             // 
             // approval
             // 
@@ -148,7 +148,7 @@
             this.ClientSize = new System.Drawing.Size(1170, 738);
             this.Controls.Add(this.approval);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.name);
+            this.Controls.Add(this.username);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -174,7 +174,7 @@
         private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.TextBox email;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox name;
+        private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.Label approval;
     }
 }

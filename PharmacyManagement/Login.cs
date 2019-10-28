@@ -26,9 +26,9 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    using (var cmd = new SQLiteCommand("SELECT Email,Password FROM pharmacy WHERE Email=@Email AND Password = @Password", conn))
+                    using (var cmd = new SQLiteCommand("SELECT Username,Password FROM pharmacyList WHERE Username=@Username AND Password = @Password", conn))
                     {
-                        cmd.Parameters.AddWithValue("@Email", textBox1.Text);
+                        cmd.Parameters.AddWithValue("@Username", textBox1.Text);
                         cmd.Parameters.AddWithValue("@Password", textBox2.Text);
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -40,7 +40,7 @@ namespace PharmacyManagement
                             if (count == 1)
                             {
                                 this.Hide();
-                                var m = new MainScreen();
+                                var m = new MainScreen(textBox1.Text);
                                 m.Closed += (s, args) => this.Close();
                                 m.StartPosition = FormStartPosition.Manual;
                                 m.Location = new Point(this.Location.X, this.Location.Y);
@@ -48,7 +48,7 @@ namespace PharmacyManagement
                             }
                             else if (count == 0)
                             {
-                                MessageBox.Show("Email or password is wrong!");
+                                MessageBox.Show("Username or password is wrong!");
                             }
                         }
                     }
@@ -79,5 +79,6 @@ namespace PharmacyManagement
                 Button1_Click(this, new EventArgs());
             }
         }
+
     }
 }

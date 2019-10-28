@@ -15,9 +15,16 @@ namespace PharmacyManagement
     {
         Medicine m = new Medicine();
         int index;
+        string globalID;
         public MainScreen()
         {
             InitializeComponent();
+        }
+
+        public MainScreen(string username)
+        {
+            InitializeComponent();
+            globalID = username;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,7 +44,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    using (var cmd = new SQLiteCommand("SELECT Name FROM pharmacy", conn))
+                    using (var cmd = new SQLiteCommand("SELECT Username FROM pharmacyList", conn))
                     {
                         DataTable dt = new DataTable();
                         SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
@@ -63,7 +70,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    using (var cmd = new SQLiteCommand("SELECT Name FROM pharmacy", conn))
+                    using (var cmd = new SQLiteCommand("SELECT Username FROM pharmacyList", conn))
                     {
                         DataTable dt = new DataTable();
                         SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
@@ -85,7 +92,7 @@ namespace PharmacyManagement
 
         private void button3_Click(object sender, EventArgs e)
         {
-            m.AddMedicine(name.Text, stock.Text, report.Text, usage.Text);
+            m.AddMedicine(name.Text, stock.Text, report.Text, usage.Text,globalID);
             name.Clear();
             stock.Clear();
             report.Clear();
@@ -155,12 +162,12 @@ namespace PharmacyManagement
             
             DataGridViewRow selectedRow = dataGridView3.Rows[index];
             string medName = selectedRow.Cells[1].Value.ToString();
-            m.DeleteMedicine(medName);
+            m.DeleteMedicine(medName,globalID);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            DataTable dt = m.ViewMedicine();
+            DataTable dt = m.ViewMedicine(globalID);
             dataGridView3.DataSource = dt;
             DataGridViewColumn column = dataGridView3.Columns[0];
             column.Width = 150;
@@ -192,12 +199,18 @@ namespace PharmacyManagement
             string medStock = textBox5.Text;
             string medReport = textBox4.Text;
             string medUsage = textBox2.Text;
-            m.UpdateMedicine(medId, medName, medStock, medReport,medUsage);
+            m.UpdateMedicine(medId, medName, medStock, medReport,medUsage,globalID);
             textBox3.Clear();
             textBox5.Clear();
             textBox4.Clear();
             textBox2.Clear();
             label14.Text = "Updated Successfully";
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            button5_Click(sender,e);
+            tabPage7_MouseEnter(sender, e);
         }
     }
 }

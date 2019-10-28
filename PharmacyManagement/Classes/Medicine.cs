@@ -11,10 +11,10 @@ namespace PharmacyManagement
 {
     public class Medicine
     {
-        public void AddMedicine(string name,string stock,string report,string usage)
+        public void AddMedicine(string name,string stock,string report,string usage,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = @"insert into medicine (Name,Stock,Report,Usage) values(@Name,@Stock,@Report,@Usage) ";
+            string query = String.Format("insert into medicines_{0} (Name,Stock,Report,Usage) values(@Name,@Stock,@Report,@Usage) ", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", name));
             cmd.Parameters.Add(new SQLiteParameter("@Stock", stock));
@@ -25,14 +25,15 @@ namespace PharmacyManagement
             
         }
 
-        public DataTable ViewMedicine()
+        public DataTable ViewMedicine(string globalID)
         {
             try
             {
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    using (var cmd = new SQLiteCommand("SELECT * FROM medicine", conn))
+                    string query = String.Format("SELECT * FROM medicines_{0}", globalID);
+                    using (var cmd = new SQLiteCommand(query, conn))
                     {
                         DataTable dt = new DataTable();
                         SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
@@ -49,20 +50,20 @@ namespace PharmacyManagement
             }
         }
 
-        public void DeleteMedicine(string medName)
+        public void DeleteMedicine(string medName,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = @"delete from medicine where Name = @Name";
+            string query = String.Format("delete from medicines_{0} where Name = @Name", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", medName));
             con.Open();
             cmd.ExecuteNonQuery();
         }
 
-        public void UpdateMedicine(string medId, string medName, string medStock, string medReport, string medUsage)
+        public void UpdateMedicine(string medId, string medName, string medStock, string medReport, string medUsage,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = @"update medicine set Name = @Name, Stock = @Stock, Report = @Report, Usage = @Usage where MedId = @MedId";
+            string query = String.Format("update medicines_{0} set Name = @Name, Stock = @Stock, Report = @Report, Usage = @Usage where MedId = @MedId", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@MedId", medId));
             cmd.Parameters.Add(new SQLiteParameter("@Name", medName));
