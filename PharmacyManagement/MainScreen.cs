@@ -14,8 +14,11 @@ namespace PharmacyManagement
     public partial class MainScreen : Form
     {
         Medicine m = new Medicine();
+        Patient p = new Patient();
+
         int index;
         string globalID;
+
         public MainScreen()
         {
             InitializeComponent();
@@ -102,43 +105,16 @@ namespace PharmacyManagement
 
         private void tabPage7_MouseEnter(object sender, EventArgs e)
         {
-            try
-            {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
-                {
-                    conn.Open();
-                    using (var cmd = new SQLiteCommand("SELECT * FROM patient", conn))
-                    {
-                        DataTable dt = new DataTable();
-                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
-                        adp.Fill(dt);
-                        dataGridView4.DataSource = dt;
-                        DataGridViewColumn column = dataGridView4.Columns[0];
-                        column.Width = 120;
-                        dataGridView4.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            dataGridView4.DataSource = p.viewPatients(globalID);
+            DataGridViewColumn column = dataGridView4.Columns[0];
+            column.Width = 120;
+            dataGridView4.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = @"insert into patient (ID,Name,Surname,Age,City,HaveReport) values(@ID,@Name,@Surname,@Age,@City,@HaveReport) ";
-            SQLiteCommand cmd = new SQLiteCommand(query, con);
-            cmd.Parameters.Add(new SQLiteParameter("@ID", ID.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@Name", pat_name.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@Surname", pat_surname.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@Age", pat_age.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@City", pat_city.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@HaveReport", pat_report.Text));
-            con.Open();
-            cmd.ExecuteNonQuery();
+            p.addPatient(ID.Text, pat_name.Text, pat_surname.Text, pat_age.Text, pat_city.Text, pat_report.Text, globalID);
             ID.Clear();
             pat_name.Clear();
             pat_surname.Clear();
