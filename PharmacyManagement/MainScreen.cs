@@ -17,6 +17,7 @@ namespace PharmacyManagement
         Patient p = new Patient();
 
         int index;
+        int index2;
         string globalID;
 
         public MainScreen()
@@ -187,6 +188,61 @@ namespace PharmacyManagement
         {
             button5_Click(sender,e);
             tabPage7_MouseEnter(sender, e);
+        }
+
+        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index2 = e.RowIndex;
+            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
+            textBox6.Text = selectedRow.Cells[1].Value.ToString();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
+            string patID = selectedRow.Cells[1].Value.ToString();
+            string patName = selectedRow.Cells[2].Value.ToString();
+            string patSurname = selectedRow.Cells[3].Value.ToString();
+            string patAge = selectedRow.Cells[4].Value.ToString();
+            string patCity= selectedRow.Cells[5].Value.ToString();
+            string patHaveReport = selectedRow.Cells[6].Value.ToString();
+
+            textBox7.Text = patID;
+            textBox8.Text = patName;
+            textBox10.Text = patSurname;
+            textBox12.Text = patAge;
+            textBox11.Text = patCity;
+            textBox9.Text = patHaveReport;
+
+
+            tabControl3.SelectedIndex = 2;
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
+            string patPatId = selectedRow.Cells[0].Value.ToString();
+            string patID = textBox7.Text;
+            string patName = textBox8.Text;
+            string patSurname = textBox10.Text;
+            string patAge = textBox12.Text;
+            string patCity = textBox11.Text;
+            string patHaveReport = textBox9.Text;
+            p.updatePatient(patPatId, patID, patName, patSurname, patAge, patCity, patHaveReport, globalID);
+            textBox7.Clear();
+            textBox8.Clear();
+            textBox10.Clear();
+            textBox12.Clear();
+            textBox11.Clear();
+            textBox9.Clear();
+            label22.Text = "Updated Successfully";
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
+            string patPatId = selectedRow.Cells[0].Value.ToString();
+            p.deletePatient(patPatId, globalID);
         }
     }
 }

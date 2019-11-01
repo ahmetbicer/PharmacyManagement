@@ -50,14 +50,30 @@ namespace PharmacyManagement
             }
         }
 
-        public void deletePatient()
+        public void deletePatient(string patPatId, string globalID)
         {
-
+            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            string query = String.Format("delete from patients_{0} where PatId = @PatId", globalID);
+            SQLiteCommand cmd = new SQLiteCommand(query, con);
+            cmd.Parameters.Add(new SQLiteParameter("@PatId",patPatId));
+            con.Open();
+            cmd.ExecuteNonQuery();
         }
 
-        public void updatePatient()
+        public void updatePatient(string patPatId, string patID, string patName, string patSurname, string patAge, string patCity, string patHaveReport, string globalID)
         {
-
+            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            string query = String.Format("update patients_{0} set ID = @ID, Name = @Name, Surname = @Surname, Age = @Age, City = @City, HaveReport = @HaveReport where PatId = @PatId", globalID);
+            SQLiteCommand cmd = new SQLiteCommand(query, con);
+            cmd.Parameters.Add(new SQLiteParameter("@PatId", patPatId));
+            cmd.Parameters.Add(new SQLiteParameter("@ID", patID));
+            cmd.Parameters.Add(new SQLiteParameter("@Name", patName));
+            cmd.Parameters.Add(new SQLiteParameter("@Surname", patSurname));
+            cmd.Parameters.Add(new SQLiteParameter("@Age", patAge));
+            cmd.Parameters.Add(new SQLiteParameter("@City", patCity));
+            cmd.Parameters.Add(new SQLiteParameter("@HaveReport", patHaveReport));
+            con.Open();
+            cmd.ExecuteNonQuery();
         }
     }
 }
