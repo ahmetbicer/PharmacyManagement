@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="Classes\Medicine.cs" />
     <Compile Include="Classes\Patient.cs" />
+    <Compile Include="Classes\Pharmacy.cs" />
+    <Compile Include="Classes\Sell.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>

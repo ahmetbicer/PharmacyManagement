@@ -39,7 +39,6 @@ namespace PharmacyManagement
                         SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
                         adp.Fill(dt);
                         return dt;
-
                     }
                 }
             }

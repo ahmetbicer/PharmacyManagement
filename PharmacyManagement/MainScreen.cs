@@ -15,10 +15,12 @@ namespace PharmacyManagement
     {
         Medicine m = new Medicine();
         Patient p = new Patient();
+        Sell s = new Sell();
 
         int index;
         int index2;
         string globalID;
+        int sellIndex;
 
         public MainScreen()
         {
@@ -125,15 +127,6 @@ namespace PharmacyManagement
             pat_approval.Text = "Added Successfully";
         }
 
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            index = e.RowIndex;
-            DataGridViewRow selectedRow = dataGridView3.Rows[index];
-            textBox1.Text = selectedRow.Cells[1].Value.ToString();
-
-            
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             
@@ -188,6 +181,7 @@ namespace PharmacyManagement
         {
             button5_Click(sender,e);
             tabPage7_MouseEnter(sender, e);
+
         }
 
         private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -243,6 +237,50 @@ namespace PharmacyManagement
             DataGridViewRow selectedRow = dataGridView4.Rows[index2];
             string patPatId = selectedRow.Cells[0].Value.ToString();
             p.deletePatient(patPatId, globalID);
+        }
+
+        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index = e.RowIndex;
+            DataGridViewRow selectedRow = dataGridView3.Rows[index];
+            textBox1.Text = selectedRow.Cells[1].Value.ToString();
+        }
+
+        private void textBox13_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox13.Text == "")
+            {
+                tabControl1_Enter(sender, e);
+            }
+
+            DataTable dt = m.SearchMedicine(textBox13.Text, globalID);
+            dataGridView5.DataSource = dt;
+            DataGridViewColumn column = dataGridView5.Columns[0];
+            column.Width = 150;
+            dataGridView5.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+        }
+
+        private void tabControl1_Enter(object sender, EventArgs e)
+        {
+            DataTable dt = m.ViewMedicine(globalID);
+            dataGridView5.DataSource = dt;
+            DataGridViewColumn column = dataGridView5.Columns[0];
+            column.Width = 150;
+            dataGridView5.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+        }
+
+        private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            sellIndex = e.RowIndex;
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = dataGridView5.Rows[sellIndex];
+            string sellname = selectedRow.Cells[1].Value.ToString();
+            int stock = int.Parse(selectedRow.Cells[2].Value.ToString());
+            s.SellMedicine(sellname, stock, globalID);
+            tabControl1_Enter(sender, e);
         }
     }
 }

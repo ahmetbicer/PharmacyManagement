@@ -73,5 +73,31 @@ namespace PharmacyManagement
             con.Open();
             cmd.ExecuteNonQuery();
         }
+
+        public DataTable SearchMedicine(string name, string globalID)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = String.Format("SELECT * FROM medicines_{0} where Name like @Name", globalID);                   
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@Name", name + "%"));
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        return dt;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
     }
 }

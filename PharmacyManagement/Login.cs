@@ -13,6 +13,7 @@ namespace PharmacyManagement
 {
     public partial class Login : Form
     {
+        Pharmacy p = new Pharmacy();
         public Login()
         {
             InitializeComponent();
@@ -21,43 +22,22 @@ namespace PharmacyManagement
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            try
+            int r = p.Login(textBox1.Text,textBox2.Text);
+            if(r == 1)
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
-                {
-                    conn.Open();
-                    using (var cmd = new SQLiteCommand("SELECT Username,Password FROM pharmacyList WHERE Username=@Username AND Password = @Password", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Username", textBox1.Text);
-                        cmd.Parameters.AddWithValue("@Password", textBox2.Text);
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            var count = 0;
-                            while (reader.Read())
-                            {
-                                count = count + 1;
-                            }
-                            if (count == 1)
-                            {
-                                this.Hide();
-                                var m = new MainScreen(textBox1.Text);
-                                m.Closed += (s, args) => this.Close();
-                                m.StartPosition = FormStartPosition.Manual;
-                                m.Location = new Point(this.Location.X, this.Location.Y);
-                                m.Show();
-                            }
-                            else if (count == 0)
-                            {
-                                MessageBox.Show("Username or password is wrong!");
-                            }
-                        }
-                    }
-                }
+                this.Hide();
+                var m = new MainScreen(textBox1.Text);
+                m.Closed += (s, args) => this.Close();
+                m.StartPosition = FormStartPosition.Manual;
+                m.Location = new Point(this.Location.X, this.Location.Y);
+                m.Show();
             }
-            catch (Exception ex)
+            if(r == 0)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Username or password is wrong!");
             }
+            
+
         }
 
         private void Button2_Click(object sender, EventArgs e)
