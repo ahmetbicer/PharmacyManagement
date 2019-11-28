@@ -75,6 +75,12 @@
     <Compile Include="Register.Designer.cs">
       <DependentUpon>Register.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,6 +99,9 @@
     <EmbeddedResource Include="Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -108,6 +117,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\controls.png" />
     <Content Include="Assets\Icons\clipboard.png" />
     <Content Include="Assets\Icons\commerce.png" />
     <Content Include="Assets\Icons\dermatology.png" />
@@ -120,6 +130,8 @@
     <Content Include="Assets\Icons\payment-method.png" />
     <Content Include="Assets\Icons\pharmacy %281%29.ico" />
     <Content Include="Assets\Icons\pharmacy.png" />
+    <Content Include="Assets\Icons\settings %281%29.png" />
+    <Content Include="Assets\Icons\settings.png" />
     <Content Include="Assets\Icons\trade.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

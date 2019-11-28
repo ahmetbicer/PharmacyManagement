@@ -11,15 +11,16 @@ namespace PharmacyManagement
 {
     public class Medicine
     {
-        public void AddMedicine(string name,string stock,string report,string usage,string globalID)
+        public void AddMedicine(string name,string stock,string report,string usage,string price,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("insert into medicines_{0} (Name,Stock,Report,Usage) values(@Name,@Stock,@Report,@Usage) ", globalID);
+            string query = String.Format("insert into medicines_{0} (Name,Stock,Report,Usage,Price) values(@Name,@Stock,@Report,@Usage,@Price) ", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", name));
             cmd.Parameters.Add(new SQLiteParameter("@Stock", stock));
             cmd.Parameters.Add(new SQLiteParameter("@Report", report));
             cmd.Parameters.Add(new SQLiteParameter("@Usage", usage));
+            cmd.Parameters.Add(new SQLiteParameter("@Price", price));
             con.Open();
             cmd.ExecuteNonQuery();
             
@@ -33,6 +34,31 @@ namespace PharmacyManagement
                 {
                     conn.Open();
                     string query = String.Format("SELECT * FROM medicines_{0}", globalID);
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        return dt;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        public DataTable CartMedicine(string globalID)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = String.Format("SELECT Name,Stock,Price FROM medicines_{0}", globalID);
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         DataTable dt = new DataTable();
@@ -81,7 +107,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("SELECT * FROM medicines_{0} where Name like @Name", globalID);                   
+                    string query = String.Format("SELECT Name,Stock,Price FROM medicines_{0} where Name like @Name", globalID);                   
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         cmd.Parameters.Add(new SQLiteParameter("@Name", name + "%"));
