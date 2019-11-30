@@ -22,6 +22,7 @@ namespace PharmacyManagement
         int index;
         int index2;
         int index3;
+        int index4;
         string globalID;
         int sellIndex;
 
@@ -41,16 +42,6 @@ namespace PharmacyManagement
             dt3.Columns.Add("Unit Price $");
 
             dataGridView6.DataSource = dt3;
-
-
-            DataGridViewColumn column = dataGridView6.Columns[0];
-            column.Width = 59;
-            DataGridViewColumn column2 = dataGridView6.Columns[1];
-            column2.Width = 55;
-            DataGridViewColumn column3 = dataGridView6.Columns[2];
-            column3.Width = 64;
-            DataGridViewColumn column4 = dataGridView6.Columns[3];
-            column4.Width = 59;
 
             foreach(DataGridViewColumn col1 in dataGridView6.Columns)
             {
@@ -155,7 +146,6 @@ namespace PharmacyManagement
             button5_Click(sender,e);
             tabPage7_MouseEnter(sender, e);
             tabControl1_Enter(sender, e);
-            getpatients();
 
         }
 
@@ -303,9 +293,17 @@ namespace PharmacyManagement
                 dataGridView5.Rows[row.Index].Cells[4].Value = 0;
 
             }
+
+            DataTable dt5 = p.cartPatients(globalID);
+            dataGridView9.DataSource = dt5;
+            /*DataGridViewCheckBoxColumn col = new DataGridViewCheckBoxColumn();
+            col.HeaderText = "+";
+            col.Width = 30;
+            dataGridView9.Columns.Add(col);*/
+
         }
 
-        
+
         private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             sellIndex = e.RowIndex;
@@ -375,16 +373,6 @@ namespace PharmacyManagement
 
         }
 
-        private void getpatients()
-        {
-            DataTable dt = p.viewPatients(globalID);
-            dataGridView9.DataSource = dt;
-        }
-
-        private void MainScreen_Load(object sender, EventArgs e)
-        {
-            getpatients();
-        }
 
        private void button14_Click(object sender, EventArgs e)
         {
@@ -392,9 +380,16 @@ namespace PharmacyManagement
             { 
                 s.SellMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()),globalID);                
             }*/
+            if(dataGridView6.Rows.Count != 0)
+            {
+                Checkout c = new Checkout(dataGridView6.DataSource,dataGridView9.Rows[index4].Cells[0].Value.ToString());
 
-            dt3.Rows.Clear(); 
-            
+                c.StartPosition = FormStartPosition.Manual;
+                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                c.ShowDialog();
+
+                dt3.Rows.Clear();
+            }
         }
 
         private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -408,6 +403,29 @@ namespace PharmacyManagement
             {
                 dt3.Rows[index3].Delete();
             }
+        }
+
+        private void dataGridView9_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index4 = e.RowIndex;
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 3;
+            tabControl3.SelectedIndex = 1;
+        }
+
+        private void textBox17_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox17.Text == "")
+            {
+                tabControl1_Enter(sender, e);
+            }
+
+            DataTable dt = p.SearchPatient(textBox17.Text, globalID);
+            dataGridView9.Columns.Clear();
+            dataGridView9.DataSource = dt;
         }
     }
 }
