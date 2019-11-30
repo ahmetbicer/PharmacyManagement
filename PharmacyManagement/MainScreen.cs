@@ -21,6 +21,7 @@ namespace PharmacyManagement
 
         int index;
         int index2;
+        int index3;
         string globalID;
         int sellIndex;
 
@@ -37,7 +38,24 @@ namespace PharmacyManagement
             dt3.Columns.Add("Name");
             dt3.Columns.Add("Stock");
             dt3.Columns.Add("Quantity");
-            dt3.Columns.Add("Price");
+            dt3.Columns.Add("Unit Price $");
+
+            dataGridView6.DataSource = dt3;
+
+
+            DataGridViewColumn column = dataGridView6.Columns[0];
+            column.Width = 59;
+            DataGridViewColumn column2 = dataGridView6.Columns[1];
+            column2.Width = 55;
+            DataGridViewColumn column3 = dataGridView6.Columns[2];
+            column3.Width = 64;
+            DataGridViewColumn column4 = dataGridView6.Columns[3];
+            column4.Width = 59;
+
+            foreach(DataGridViewColumn col1 in dataGridView6.Columns)
+            {
+                col1.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -294,24 +312,38 @@ namespace PharmacyManagement
 
             if (e.ColumnIndex == 6 && e.RowIndex > -1)
             {
+
                 foreach (DataGridViewRow row in dataGridView5.SelectedRows)
                 {
-                    if(int.Parse(row.Cells[4].Value.ToString()) != 0)
+                    foreach (DataGridViewRow row2 in dataGridView6.Rows)
                     {
-                        dt3.Rows.Add(row.Cells[0].Value,row.Cells[1].Value, row.Cells[4].Value,row.Cells[2].Value);
-                    }
-                    row.Cells[4].Value = 0;
-                    
-                }
-                dataGridView6.DataSource = dt3;
+                        if (row.Cells[0].Value.ToString() == row2.Cells[0].Value.ToString())
+                        {
+                            int newQ = int.Parse(row.Cells[4].Value.ToString()) + int.Parse(row2.Cells[2].Value.ToString());
+                            if (int.Parse(row.Cells[4].Value.ToString()) != 0)
+                            {
+                                dt3.Rows.Add(row.Cells[0].Value, row.Cells[1].Value, newQ, row.Cells[2].Value);
+                                dt3.Rows[row2.Index].Delete();
 
-                DataGridViewColumn column = dataGridView6.Columns[0];
-                column.Width = 79;
-                DataGridViewColumn column2 = dataGridView6.Columns[1];
-                column2.Width = 79;
-                DataGridViewColumn column3 = dataGridView6.Columns[2];
-                column3.Width = 79;
+                            }
+                            row.Cells[4].Value = 0;
+                            dataGridView6.DataSource = dt3;
+                        }
+                        
+                    }
+                    
+                    if (int.Parse(row.Cells[4].Value.ToString()) != 0)
+                    {
+                        dt3.Rows.Add(row.Cells[0].Value, row.Cells[1].Value, row.Cells[4].Value, row.Cells[2].Value);
+                    
+                    }
+
+                    row.Cells[4].Value = 0;
+                    dataGridView6.DataSource = dt3;
+                }
+                
             }
+
             if (e.ColumnIndex == 5 && e.RowIndex > -1)
             {
                 foreach (DataGridViewRow row in dataGridView5.SelectedRows)
@@ -356,13 +388,26 @@ namespace PharmacyManagement
 
        private void button14_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridView6.Rows)
-            {
+            /*foreach (DataGridViewRow row in dataGridView6.Rows)
+            { 
                 s.SellMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()),globalID);                
-            }
+            }*/
 
             dt3.Rows.Clear(); 
             
+        }
+
+        private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index3 = e.RowIndex;
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            if(index3 > -1)
+            {
+                dt3.Rows[index3].Delete();
+            }
         }
     }
 }

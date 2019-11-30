@@ -15,7 +15,8 @@ namespace PharmacyManagement
             string query = String.Format("update medicines_{0} set Stock = @Stock where Name= @Name", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", name));
-            cmd.Parameters.Add(new SQLiteParameter("@Stock", stock - quantity));
+            int st = stock - quantity;
+            cmd.Parameters.Add(new SQLiteParameter("@Stock", st));
             con.Open();
             cmd.ExecuteNonQuery();
         }
