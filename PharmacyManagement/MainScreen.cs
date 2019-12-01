@@ -255,7 +255,7 @@ namespace PharmacyManagement
             }
         }
 
-        private void tabControl1_Enter(object sender, EventArgs e)
+        public void tabControl1_Enter(object sender, EventArgs e)
         {   
             DataTable dt = m.CartMedicine(globalID);
             dataGridView5.Columns.Clear();
@@ -346,6 +346,7 @@ namespace PharmacyManagement
             {
                 foreach (DataGridViewRow row in dataGridView5.SelectedRows)
                 {
+                    if(int.Parse(row.Cells[1].Value.ToString()) > int.Parse(row.Cells[4].Value.ToString()) )
                     row.Cells[4].Value = int.Parse(row.Cells[4].Value.ToString()) + 1;
 
                 }
@@ -382,7 +383,8 @@ namespace PharmacyManagement
             }*/
             if(dataGridView6.Rows.Count != 0)
             {
-                Checkout c = new Checkout(dataGridView6.DataSource,dataGridView9.Rows[index4].Cells[0].Value.ToString());
+                //Checkout c = new Checkout(dataGridView6.DataSource,dataGridView9.Rows[index4].Cells[0].Value.ToString(),globalID);
+                Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(), globalID);
 
                 c.StartPosition = FormStartPosition.Manual;
                 c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
@@ -399,7 +401,7 @@ namespace PharmacyManagement
 
         private void button16_Click(object sender, EventArgs e)
         {
-            if(index3 > -1)
+            if(index3 > -1 && dt3.Rows.Count != 0)
             {
                 dt3.Rows[index3].Delete();
             }

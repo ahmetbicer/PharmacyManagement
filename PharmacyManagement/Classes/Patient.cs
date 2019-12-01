@@ -124,5 +124,30 @@ namespace PharmacyManagement
                 return null;
             }
         }
+
+        public DataTable GetPatient(string id, string globalID)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = String.Format("select * from patients_{0} where ID = {1}", globalID,id);
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Windows.Forms;
+
 namespace PharmacyManagement
 {
     public class Pharmacy
@@ -12,9 +14,10 @@ namespace PharmacyManagement
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
             string query1 = String.Format("insert into pharmacyList (Username,Email,Password) values(@Username,@Email,@Password);");
-            string query2 = String.Format("CREATE TABLE medicines_{0}('MedId' INTEGER,'Name'  TEXT, 'Stock' TEXT,'Report'    INTEGER,'Usage' TEXT,'Price'    TEXT,PRIMARY KEY('MedId'));", username);
-            string query3 = String.Format("CREATE TABLE patients_{0} ('PatId' INTEGER,'ID'    INTEGER,'Name'  TEXT,'Surname'   TEXT,'Age'   INTEGER,'City'  TEXT,'HaveReport'    INTEGER,PRIMARY KEY('PatId')); ", username);
-            string query = query1 + query2 + query3;
+            string query2 = String.Format("CREATE TABLE medicines_{0}('MedId' INTEGER,'Name'  TEXT, 'Stock' TEXT,'Report'    INTEGER,'Price'    TEXT,PRIMARY KEY('MedId'));", username);
+            string query3 = String.Format("CREATE TABLE medicines_{0}_usage('MedId' INTEGER,'Dose'  TEXT, 'Definition' TEXT,'ActiveIngredient'    TEXT,'Report' TEXT,PRIMARY KEY('MedId'));", username);
+            string query4 = String.Format("CREATE TABLE patients_{0} ('PatId' INTEGER,'ID'    INTEGER,'Name'  TEXT,'Surname'   TEXT,'Age'   INTEGER,'City'  TEXT,'HaveReport'    INTEGER,PRIMARY KEY('PatId')); ", username);
+            string query = query1 + query2 + query3 + query4;
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Username", username));
             cmd.Parameters.Add(new SQLiteParameter("@Email", email));
@@ -61,6 +64,7 @@ namespace PharmacyManagement
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 return 0;
             }
         }

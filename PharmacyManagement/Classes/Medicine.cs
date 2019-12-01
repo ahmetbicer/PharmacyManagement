@@ -14,12 +14,11 @@ namespace PharmacyManagement
         public void AddMedicine(string name,string stock,string report,string usage,string price,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("insert into medicines_{0} (Name,Stock,Report,Usage,Price) values(@Name,@Stock,@Report,@Usage,@Price) ", globalID);
+            string query = String.Format("insert into medicines_{0} (Name,Stock,Report,Price) values(@Name,@Stock,@Report,@Price) ", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", name));
             cmd.Parameters.Add(new SQLiteParameter("@Stock", stock));
             cmd.Parameters.Add(new SQLiteParameter("@Report", report));
-            cmd.Parameters.Add(new SQLiteParameter("@Usage", usage));
             cmd.Parameters.Add(new SQLiteParameter("@Price", price));
             con.Open();
             cmd.ExecuteNonQuery();
@@ -89,13 +88,12 @@ namespace PharmacyManagement
         public void UpdateMedicine(string medId, string medName, string medStock, string medReport, string medUsage,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("update medicines_{0} set Name = @Name, Stock = @Stock, Report = @Report, Usage = @Usage where MedId = @MedId", globalID);
+            string query = String.Format("update medicines_{0} set Name = @Name, Stock = @Stock, Report = @Report where MedId = @MedId", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@MedId", medId));
             cmd.Parameters.Add(new SQLiteParameter("@Name", medName));
             cmd.Parameters.Add(new SQLiteParameter("@Stock", medStock));
             cmd.Parameters.Add(new SQLiteParameter("@Report", medReport));
-            cmd.Parameters.Add(new SQLiteParameter("@Usage", medUsage));
             con.Open();
             cmd.ExecuteNonQuery();
         }
@@ -125,5 +123,34 @@ namespace PharmacyManagement
                 return null;
             }
         }
+
+        public DataTable GetUsageDetails(string name, string globalID)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = String.Format("select medicines_{0}_usage.Dose,medicines_{0}_usage.Definition,medicines_{0}_usage.ActiveIngredient, medicines_{0}_usage.Report  from medicines_{0} inner join medicines_{0}_usage on medicines_{0}.MedId = medicines_{0}_usage.MedId where Name = @Name", globalID);
+                    //
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@Name", name));
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        return dt;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+
     }
 }
