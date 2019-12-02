@@ -11,15 +11,14 @@ namespace PharmacyManagement
 {
     public class Medicine
     {
-        public void AddMedicine(string name,string stock,string report,string usage,string price,string globalID)
+        public void AddMedicine(string name,string stock,string price,string dose,string report,string definition, string ingredients, string imgpath,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("insert into medicines_{0} (Name,Stock,Report,Price) values(@Name,@Stock,@Report,@Price) ", globalID);
+            string query1 = String.Format("insert into medicines_{0} (Name,Stock,Price,ImgPath) values('{1}','{2}','{3}',@ImgPath); ", globalID,name,stock,price);
+            string query2 = String.Format("insert into medicines_{0}_usage (Dose,Definition,Ingredients,Report) values('{1}','{2}','{3}','{4}'); ", globalID,dose,definition,ingredients,report);
+            string query = query1 + query2;
             SQLiteCommand cmd = new SQLiteCommand(query, con);
-            cmd.Parameters.Add(new SQLiteParameter("@Name", name));
-            cmd.Parameters.Add(new SQLiteParameter("@Stock", stock));
-            cmd.Parameters.Add(new SQLiteParameter("@Report", report));
-            cmd.Parameters.Add(new SQLiteParameter("@Price", price));
+            cmd.Parameters.Add(new SQLiteParameter("@ImgPath", imgpath));
             con.Open();
             cmd.ExecuteNonQuery();
             
@@ -131,8 +130,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("select medicines_{0}_usage.Dose,medicines_{0}_usage.Definition,medicines_{0}_usage.ActiveIngredient, medicines_{0}_usage.Report  from medicines_{0} inner join medicines_{0}_usage on medicines_{0}.MedId = medicines_{0}_usage.MedId where Name = @Name", globalID);
-                    //
+                    string query = String.Format("select medicines_{0}_usage.Dose,medicines_{0}_usage.Definition,medicines_{0}_usage.Ingredients, medicines_{0}_usage.Report  from medicines_{0} inner join medicines_{0}_usage on medicines_{0}.MedId = medicines_{0}_usage.MedId where Name = @Name", globalID);
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         cmd.Parameters.Add(new SQLiteParameter("@Name", name));
@@ -141,6 +139,41 @@ namespace PharmacyManagement
                         adp.Fill(dt);
                         return dt;
 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        public string GetImagePath(string name,string globalID)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = String.Format("select ImgPath from medicines_{0} where Name = @Name", globalID);
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@Name", name));
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        string imgpath = dt.Rows[0].Field<string>(0);
+                        if(imgpath == null)
+                        {
+                            string eximg = @"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png";
+                            return eximg;
+                        }
+                        else
+                        {
+                            return imgpath;
+                        }
+                        
                     }
                 }
             }

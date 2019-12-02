@@ -10,28 +10,25 @@ using System.Windows.Forms;
 
 namespace PharmacyManagement
 {
-    public partial class Checkout : Form
+    public partial class PharmacyCheckout : Form
     {
-        string globalid;
-        string id;
         DataTable dt1;
-
-        Patient p = new Patient();
         Medicine m = new Medicine();
         Sell s = new Sell();
-        public Checkout(DataTable dt, string patID, string globalID)
+        Pharmacy ph = new Pharmacy();
+        string user;
+        string globalid;
+        public PharmacyCheckout(DataTable dt, string username, string globalID)
         {
             InitializeComponent();
             dt1 = dt;
-            id = patID;
+            user = username;
             globalid = globalID;
         }
 
-
-        private void Checkout_Load(object sender, EventArgs e)
+        private void PharmacyCheckout_Load(object sender, EventArgs e)
         {
-
-            DataTable dt2 = p.GetPatient(id, globalid);
+            DataTable dt2 = ph.checkoutPharmacy(user);
             dataGridView2.DataSource = dt2;
             float price = 0;
 
@@ -57,16 +54,14 @@ namespace PharmacyManagement
             label10.Text = "Push details button to see...";
             label12.Text = "Push details button to see...";
             label14.Text = "Push details button to see...";
-
-
         }
+
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
             if (e.ColumnIndex == 4 && e.RowIndex > -1)
             {
                 DataTable dt = m.GetUsageDetails(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString(), globalid);
-                
+
                 label8.Text = dt.Rows[0].Field<string>(0);
                 label10.Text = dt.Rows[0].Field<string>(1);
                 label12.Text = dt.Rows[0].Field<string>(2);
@@ -77,7 +72,7 @@ namespace PharmacyManagement
 
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach(DataGridViewRow row in dataGridView1.Rows)
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 s.SellMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
             }
