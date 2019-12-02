@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SQLite;
 
 namespace PharmacyManagement
 {
@@ -16,26 +16,25 @@ namespace PharmacyManagement
         Medicine m = new Medicine();
         Patient p = new Patient();
         Sell s = new Sell();
+
         DataTable dt3 = new DataTable();
-
-
         int index;
         int index2;
         int index3;
         int index4;
         string globalID;
         int sellIndex;
-
-        public MainScreen()
-        {
-            InitializeComponent();
-        }
+        bool clicked = false;
 
         public MainScreen(string username)
         {
             InitializeComponent();
             globalID = username;
+        }
 
+        private void MainScreen_Load(object sender, EventArgs e)
+        {
+            tabControl1_SelectedIndexChanged(sender, e);
             dt3.Columns.Add("Name");
             dt3.Columns.Add("Stock");
             dt3.Columns.Add("Quantity");
@@ -43,13 +42,15 @@ namespace PharmacyManagement
 
             dataGridView6.DataSource = dt3;
 
-            foreach(DataGridViewColumn col1 in dataGridView6.Columns)
+            foreach (DataGridViewColumn col1 in dataGridView6.Columns)
             {
                 col1.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
+
+            pictureBox1.Hide();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void logoutBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             var l = new Login();
@@ -58,10 +59,60 @@ namespace PharmacyManagement
             l.Location = new Point(this.Location.X, this.Location.Y);
             l.Show();
         }
-        
+
+        private void settingsBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Settings se = new Settings();
+            se.Closed += (s, args) => this.Close();
+            se.StartPosition = FormStartPosition.Manual;
+            se.Location = new Point(this.Location.X, this.Location.Y);
+            se.Show();
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabControl1.TabPages[0])
+            {
+                sell_to_patient();
+            }
+            if (tabControl1.SelectedTab == tabControl1.TabPages[1])
+            {
+
+            }
+            if (tabControl1.SelectedTab == tabControl1.TabPages[2])
+            {
+                viewMedicines();
+            }
+            if (tabControl1.SelectedTab == tabControl1.TabPages[3])
+            {
+                viewPatients();
+            }
+            if (tabControl1.SelectedTab == tabControl1.TabPages[4])
+            {
+
+            }
+        }
+
+        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl2.SelectedTab == tabControl2.TabPages[0])
+            {
+                viewMedicines();
+            }
+        }
+
+        private void tabControl3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl3.SelectedTab == tabControl3.TabPages[0])
+            {
+                viewPatients();
+            }
+        }
+
         private void button3_Click(object sender, EventArgs e)
         {
-            m.AddMedicine(name.Text, stock.Text, report.Text, usage.Text,textBox16.Text,globalID);
+            m.AddMedicine(name.Text, stock.Text, report.Text, usage.Text, textBox16.Text, globalID);
             name.Clear();
             stock.Clear();
             report.Clear();
@@ -70,9 +121,8 @@ namespace PharmacyManagement
             approval.Text = "Added Successfully";
         }
 
-        private void tabPage7_MouseEnter(object sender, EventArgs e)
+        private void viewPatients()
         {
-
             dataGridView4.DataSource = p.viewPatients(globalID);
             DataGridViewColumn column = dataGridView4.Columns[0];
             column.Width = 120;
@@ -93,19 +143,10 @@ namespace PharmacyManagement
 
         private void button4_Click(object sender, EventArgs e)
         {
-            
+
             DataGridViewRow selectedRow = dataGridView3.Rows[index];
             string medName = selectedRow.Cells[1].Value.ToString();
-            m.DeleteMedicine(medName,globalID);
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            DataTable dt = m.ViewMedicine(globalID);
-            dataGridView3.DataSource = dt;
-            DataGridViewColumn column = dataGridView3.Columns[0];
-            column.Width = 150;
-            dataGridView3.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            m.DeleteMedicine(medName, globalID);
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -122,7 +163,6 @@ namespace PharmacyManagement
             textBox2.Text = medUsage;
 
             tabControl2.SelectedIndex = 2;
-            
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -133,7 +173,7 @@ namespace PharmacyManagement
             string medStock = textBox5.Text;
             string medReport = textBox4.Text;
             string medUsage = textBox2.Text;
-            m.UpdateMedicine(medId, medName, medStock, medReport,medUsage,globalID);
+            m.UpdateMedicine(medId, medName, medStock, medReport, medUsage, globalID);
             textBox3.Clear();
             textBox5.Clear();
             textBox4.Clear();
@@ -141,19 +181,13 @@ namespace PharmacyManagement
             label14.Text = "Updated Successfully";
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        private void viewMedicines()
         {
-            button5_Click(sender,e);
-            tabPage7_MouseEnter(sender, e);
-            tabControl1_Enter(sender, e);
-
-        }
-
-        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            index2 = e.RowIndex;
-            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
-            textBox6.Text = selectedRow.Cells[1].Value.ToString();
+            DataTable dt = m.ViewMedicine(globalID);
+            dataGridView3.DataSource = dt;
+            DataGridViewColumn column = dataGridView3.Columns[0];
+            column.Width = 150;
+            dataGridView3.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -163,7 +197,7 @@ namespace PharmacyManagement
             string patName = selectedRow.Cells[2].Value.ToString();
             string patSurname = selectedRow.Cells[3].Value.ToString();
             string patAge = selectedRow.Cells[4].Value.ToString();
-            string patCity= selectedRow.Cells[5].Value.ToString();
+            string patCity = selectedRow.Cells[5].Value.ToString();
             string patHaveReport = selectedRow.Cells[6].Value.ToString();
 
             textBox7.Text = patID;
@@ -215,11 +249,18 @@ namespace PharmacyManagement
         {
             if (textBox13.Text == "")
             {
-                tabControl1_Enter(sender, e);
+                sell_to_patient();
             }
-            
+
             DataTable dt = m.SearchMedicine(textBox13.Text, globalID);
             dataGridView5.Columns.Clear();
+
+            DataGridViewImageColumn col5 = new DataGridViewImageColumn();
+            col5.Name = "Img";
+            col5.HeaderText = "Img";
+            col5.Image = Properties.Resources.image;
+            dataGridView5.Columns.Add(col5);
+
             dataGridView5.DataSource = dt;
 
             DataGridViewButtonColumn col1 = new DataGridViewButtonColumn();
@@ -251,14 +292,20 @@ namespace PharmacyManagement
 
             foreach (DataGridViewRow row in dataGridView5.Rows)
             {
-                dataGridView5.Rows[row.Index].Cells[4].Value = 0;
+                dataGridView5.Rows[row.Index].Cells[5].Value = 0;
             }
         }
 
-        public void tabControl1_Enter(object sender, EventArgs e)
-        {   
+        public void sell_to_patient()
+        {
             DataTable dt = m.CartMedicine(globalID);
             dataGridView5.Columns.Clear();
+
+            DataGridViewImageColumn col5 = new DataGridViewImageColumn();
+            col5.Name = "Img";
+            col5.HeaderText = "Img";
+            col5.Image = Properties.Resources.image;
+            dataGridView5.Columns.Add(col5);
             dataGridView5.DataSource = dt;
 
             DataGridViewButtonColumn col1 = new DataGridViewButtonColumn();
@@ -290,100 +337,107 @@ namespace PharmacyManagement
 
             foreach (DataGridViewRow row in dataGridView5.Rows)
             {
-                dataGridView5.Rows[row.Index].Cells[4].Value = 0;
+                dataGridView5.Rows[row.Index].Cells[5].Value = 0;
 
             }
 
             DataTable dt5 = p.cartPatients(globalID);
             dataGridView9.DataSource = dt5;
-            /*DataGridViewCheckBoxColumn col = new DataGridViewCheckBoxColumn();
-            col.HeaderText = "+";
-            col.Width = 30;
-            dataGridView9.Columns.Add(col);*/
-
         }
-
 
         private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             sellIndex = e.RowIndex;
 
-            if (e.ColumnIndex == 6 && e.RowIndex > -1)
+            if (e.ColumnIndex == 7 && e.RowIndex > -1)
             {
 
                 foreach (DataGridViewRow row in dataGridView5.SelectedRows)
                 {
                     foreach (DataGridViewRow row2 in dataGridView6.Rows)
                     {
-                        if (row.Cells[0].Value.ToString() == row2.Cells[0].Value.ToString())
+                        if (row.Cells[1].Value.ToString() == row2.Cells[0].Value.ToString())
                         {
-                            int newQ = int.Parse(row.Cells[4].Value.ToString()) + int.Parse(row2.Cells[2].Value.ToString());
-                            if (int.Parse(row.Cells[4].Value.ToString()) != 0)
+                            int newQ = int.Parse(row.Cells[5].Value.ToString()) + int.Parse(row2.Cells[2].Value.ToString());
+                            if (int.Parse(row.Cells[5].Value.ToString()) != 0)
                             {
-                                dt3.Rows.Add(row.Cells[0].Value, row.Cells[1].Value, newQ, row.Cells[2].Value);
+                                dt3.Rows.Add(row.Cells[5].Value, row.Cells[2].Value, newQ, row.Cells[3].Value);
                                 dt3.Rows[row2.Index].Delete();
 
                             }
-                            row.Cells[4].Value = 0;
+                            row.Cells[5].Value = 0;
                             dataGridView6.DataSource = dt3;
                         }
-                        
-                    }
-                    
-                    if (int.Parse(row.Cells[4].Value.ToString()) != 0)
-                    {
-                        dt3.Rows.Add(row.Cells[0].Value, row.Cells[1].Value, row.Cells[4].Value, row.Cells[2].Value);
-                    
+
                     }
 
-                    row.Cells[4].Value = 0;
+                    if (int.Parse(row.Cells[5].Value.ToString()) != 0)
+                    {
+                        dt3.Rows.Add(row.Cells[1].Value, row.Cells[2].Value, row.Cells[5].Value, row.Cells[3].Value);
+
+                    }
+
+                    row.Cells[5].Value = 0;
                     dataGridView6.DataSource = dt3;
                 }
-                
+
             }
 
-            if (e.ColumnIndex == 5 && e.RowIndex > -1)
+            if (e.ColumnIndex == 6 && e.RowIndex > -1)
             {
                 foreach (DataGridViewRow row in dataGridView5.SelectedRows)
                 {
-                    if(int.Parse(row.Cells[1].Value.ToString()) > int.Parse(row.Cells[4].Value.ToString()) )
-                    row.Cells[4].Value = int.Parse(row.Cells[4].Value.ToString()) + 1;
+                    if (int.Parse(row.Cells[2].Value.ToString()) > int.Parse(row.Cells[5].Value.ToString()))
+                        row.Cells[5].Value = int.Parse(row.Cells[5].Value.ToString()) + 1;
 
                 }
             }
 
-            if (e.ColumnIndex == 3 && e.RowIndex > -1)
+            if (e.ColumnIndex == 4 && e.RowIndex > -1)
             {
                 foreach (DataGridViewRow row in dataGridView5.SelectedRows)
                 {
-                    if(int.Parse(row.Cells[4].Value.ToString()) != 0)
+                    if (int.Parse(row.Cells[5].Value.ToString()) != 0)
                     {
-                        row.Cells[4].Value = int.Parse(row.Cells[4].Value.ToString()) - 1;
+                        row.Cells[5].Value = int.Parse(row.Cells[5].Value.ToString()) - 1;
                     }
                 }
             }
         }
-        private void button13_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            Settings se = new Settings();
-            se.Closed += (s, args) => this.Close();
-            se.StartPosition = FormStartPosition.Manual;
-            se.Location = new Point(this.Location.X, this.Location.Y);
-            se.Show();
 
+        private void dataGridView5_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0 && e.RowIndex > -1)
+            {
+                Rectangle rect = dataGridView5.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
+                try
+                {
+                    pictureBox1.Image = Image.FromFile(String.Format(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\Med{0}.png", e.RowIndex.ToString()));
+                }
+                catch(System.IO.FileNotFoundException)
+                {
+                    pictureBox1.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\Med1.png");
+                }
+                
+                pictureBox1.Location = new Point(rect.X + 353, rect.Y + 89);
+                pictureBox1.Width = 100;
+                pictureBox1.Height = 100;
+                pictureBox1.Show();
+            }
         }
 
-
-       private void button14_Click(object sender, EventArgs e)
+        private void dataGridView5_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
-            /*foreach (DataGridViewRow row in dataGridView6.Rows)
-            { 
-                s.SellMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()),globalID);                
-            }*/
-            if(dataGridView6.Rows.Count != 0)
+            if (e.ColumnIndex == 0 && e.RowIndex > -1)
             {
-                //Checkout c = new Checkout(dataGridView6.DataSource,dataGridView9.Rows[index4].Cells[0].Value.ToString(),globalID);
+                pictureBox1.Hide();
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (dataGridView6.Rows.Count != 0)
+            {
                 Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(), globalID);
 
                 c.StartPosition = FormStartPosition.Manual;
@@ -401,7 +455,7 @@ namespace PharmacyManagement
 
         private void button16_Click(object sender, EventArgs e)
         {
-            if(index3 > -1 && dt3.Rows.Count != 0)
+            if (index3 > -1 && dt3.Rows.Count != 0)
             {
                 dt3.Rows[index3].Delete();
             }
@@ -422,12 +476,32 @@ namespace PharmacyManagement
         {
             if (textBox17.Text == "")
             {
-                tabControl1_Enter(sender, e);
+                sell_to_patient();
             }
 
             DataTable dt = p.SearchPatient(textBox17.Text, globalID);
             dataGridView9.Columns.Clear();
             dataGridView9.DataSource = dt;
+        }
+
+        private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index2 = e.RowIndex;
+            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
+            textBox6.Text = selectedRow.Cells[1].Value.ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // open file dialog   
+            OpenFileDialog open = new OpenFileDialog();
+            // image filters  
+            open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox3.Image = new Bitmap(open.FileName);
+                pictureBox3.Image.Save(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\med12.png");
+            }
         }
     }
 }

@@ -104,6 +104,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
@@ -127,12 +128,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Icons\add-user.png" />
-    <Content Include="Assets\Icons\controls.png" />
     <Content Include="Assets\Icons\clipboard.png" />
     <Content Include="Assets\Icons\commerce.png" />
+    <Content Include="Assets\Images\med1.png" />
+    <Content Include="Assets\Icons\controls.png" />
+    <Content Include="Assets\Images\med2.png" />
+    <Content Include="Assets\Images\med3.png" />
     <Content Include="Assets\Icons\dermatology.png" />
     <Content Include="Assets\Icons\employee.png" />
     <Content Include="Assets\Icons\heart-problem.png" />
+    <None Include="Assets\Icons\image.png" />
     <Content Include="Assets\Icons\left-arrow %281%29.png" />
     <Content Include="Assets\Icons\left-arrow.png" />
     <Content Include="Assets\Icons\logout.png" />
@@ -144,6 +149,9 @@
     <Content Include="Assets\Icons\settings.png" />
     <Content Include="Assets\Icons\trade.png" />
     <Content Include="Assets\Icons\rubbish-bin.png" />
+    <Content Include="Properties\Image1.png" />
+    <None Include="Resources\Image3.bmp" />
+    <None Include="Resources\Image2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
