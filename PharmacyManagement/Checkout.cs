@@ -56,7 +56,6 @@ namespace PharmacyManagement
             label8.Text = "Push details button to see...";
             label10.Text = "Push details button to see...";
             label12.Text = "Push details button to see...";
-            label14.Text = "Push details button to see...";
 
 
         }
@@ -68,9 +67,16 @@ namespace PharmacyManagement
                 DataTable dt = m.GetUsageDetails(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString(), globalid);
                 
                 label8.Text = dt.Rows[0].Field<string>(0);
-                label10.Text = dt.Rows[0].Field<string>(1);
-                label12.Text = dt.Rows[0].Field<string>(2);
-                label14.Text = dt.Rows[0].Field<string>(3);
+                label10.Text = dt.Rows[0].Field<string>(2);
+                if (dt.Rows[0].Field<string>(3) == "0")
+                {
+                    label12.Text = "Doesn't need doctor report to sell.";
+                }
+                else if (dt.Rows[0].Field<string>(3) == "1")
+                {
+                    label12.Text = "Need doctor report to sell.";
+                }
+                richTextBox1.Text = dt.Rows[0].Field<string>(1);
 
             }
         }

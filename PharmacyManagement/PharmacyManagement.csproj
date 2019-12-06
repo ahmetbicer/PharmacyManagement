@@ -58,6 +58,7 @@
       <DependentUpon>Checkout.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Medicine.cs" />
+    <Compile Include="Classes\MedicineFactories.cs" />
     <Compile Include="Classes\Patient.cs" />
     <Compile Include="Classes\Pharmacy.cs" />
     <Compile Include="Classes\Sell.cs" />

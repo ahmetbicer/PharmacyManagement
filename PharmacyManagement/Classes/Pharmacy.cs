@@ -78,9 +78,10 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = "select Username from pharmacyList";
+                    string query = "select Username from pharmacyList where Username != @Username";
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
+                        cmd.Parameters.AddWithValue("@Username", username);
                         DataTable dt = new DataTable();
                         SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
                         adp.Fill(dt);
@@ -94,6 +95,32 @@ namespace PharmacyManagement
                 return null;
             }
         }
+
+        public DataTable searchPharmacy(string username)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = "select Username from pharmacyList where Username like @Username";
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@Username", username + "%"));
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
 
         public DataTable checkoutPharmacy(string username)
         {
