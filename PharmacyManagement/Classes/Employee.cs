@@ -82,10 +82,10 @@ namespace PharmacyManagement
         public void AddEmployee(string id,string name, string age, string gender, string salary, string username, string password, string pharmacyname)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = "insert into employeeList (EmployeeID,Name,Age,Gender,Salary,Username,Password,PharmacyName) values(@EmployeeID,@Name,@Age,@Gender,@Salary,@Username,@Password,@PharmacyName);";
+            string query = "insert into employeeList (EmployeeID,NameSurname,Age,Gender,Salary,Username,Password,PharmacyName) values(@EmployeeID,@NameSurname,@Age,@Gender,@Salary,@Username,@Password,@PharmacyName);";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@EmployeeID", id));
-            cmd.Parameters.Add(new SQLiteParameter("@Name", name));
+            cmd.Parameters.Add(new SQLiteParameter("@NameSurname", name));
             cmd.Parameters.Add(new SQLiteParameter("@Age", age));
             cmd.Parameters.Add(new SQLiteParameter("@Gender", gender));
             cmd.Parameters.Add(new SQLiteParameter("@Salary", salary));

@@ -63,6 +63,7 @@ namespace PharmacyManagement
             globalID = pharmacyName;
             tabControl1.TabPages[1].Enabled = false;
             tabControl1.TabPages[4].Enabled = false;
+            tabControl1.TabPages[5].Enabled = false;
         }
 
         private void MainScreen_Load(object sender, EventArgs e)
@@ -120,6 +121,9 @@ namespace PharmacyManagement
             pictureBox4.Hide();
             pictureBox2.Hide();
             pictureBox6.Hide();
+
+            textBox6.Text = globalID;
+            textBox6.ReadOnly = true;
         }
 
         private void logoutBtn_Click(object sender, EventArgs e)
@@ -132,11 +136,6 @@ namespace PharmacyManagement
             l.Show();
         }
 
-        private void settingsBtn_Click(object sender, EventArgs e)
-        {
-            Settings se = new Settings();
-            se.ShowDialog();
-        }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -159,6 +158,10 @@ namespace PharmacyManagement
             if (tabControl1.SelectedTab == tabControl1.TabPages[4])
             {
                 viewEmployees();
+            }
+            if (tabControl1.SelectedTab == tabControl1.TabPages[5])
+            {
+                updatePharmacy();
             }
         }
 
@@ -209,6 +212,16 @@ namespace PharmacyManagement
                 viewEmployees();
             }
         }
+
+        private void tabControl7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            button26.Enabled = false;
+            if(tabControl7.SelectedTab == tabControl7.TabPages[1])
+            {
+                updatePharmacy();
+            }
+        }
+        
 
 
         private void button1_Click(object sender, EventArgs e)
@@ -1513,6 +1526,50 @@ namespace PharmacyManagement
             emp.deleteEmployee(EmployeeID);
             tabControl6.SelectedIndex = 1;
             tabControl6.SelectedIndex = 0;
+        }
+
+        //settings
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            ph.DeletePharmacy(globalID);
+            this.Hide();
+            var l = new LoginScreen();
+            l.Closed += (s, args) => this.Close();
+            l.StartPosition = FormStartPosition.Manual;
+            l.Location = new Point(this.Location.X, this.Location.Y);
+            l.Show();
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            int r = ph.Login(textBox6.Text, textBox1.Text);
+            if (r == 1)
+            {
+                button26.Enabled = true;
+                textBox1.Text = "";
+            }
+            if (r == 0)
+            {
+                MessageBox.Show("Username or password is wrong!");
+            }
+        }
+
+        private void updatePharmacy()
+        {
+            DataTable dt = ph.getPharmacyInfo(globalID);
+            username.Text = globalID;
+            email.Text = dt.Rows[0].ItemArray[0].ToString();
+            password.Text = dt.Rows[0].ItemArray[1].ToString();
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            ph.updatePharmacy(email.Text, password.Text, globalID);
+            tabControl7.SelectedIndex = 2;
+            tabControl7.SelectedIndex = 1;
+            label74.ForeColor = Color.Green;
+            label74.Text = "Updated Successfully";
         }
     }
 }

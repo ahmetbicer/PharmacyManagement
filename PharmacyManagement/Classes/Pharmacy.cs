@@ -28,6 +28,21 @@ namespace PharmacyManagement
             
         }
 
+        public void DeletePharmacy(string username)
+        {
+            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            string query1 = String.Format("delete from pharmacyList where Username = @Username;");
+            string query2 = String.Format("delete from employeeList where PharmacyName = @Username;");
+            string query3 = String.Format("drop table medicines_{0};",username);
+            string query4 = String.Format("drop table medicines_{0}_usage;", username);
+            string query5 = String.Format("drop table patients_{0};", username);
+            string query = query1 + query2 + query3 + query4 + query5;
+            SQLiteCommand cmd = new SQLiteCommand(query, con);
+            cmd.Parameters.Add(new SQLiteParameter("@Username", username));
+            con.Open();
+            cmd.ExecuteNonQuery();
+        }
+
         public int Login(string username, string password)
         {
             try
@@ -145,5 +160,43 @@ namespace PharmacyManagement
                 return null;
             }
         }
+
+        public DataTable getPharmacyInfo(string username)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = "select Email,Password from pharmacyList where Username = @Username";
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        public void updatePharmacy(string email,string password,string username)
+        {
+            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            string query = "update pharmacyList set Email = @Email, Password = @Password where Username = @Username";
+            SQLiteCommand cmd = new SQLiteCommand(query, con);
+            cmd.Parameters.Add(new SQLiteParameter("@Email", email));
+            cmd.Parameters.Add(new SQLiteParameter("@Password", password));
+            cmd.Parameters.Add(new SQLiteParameter("@Username", username));
+            con.Open();
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }
