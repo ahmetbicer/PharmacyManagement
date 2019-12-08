@@ -10,15 +10,15 @@ using System.Windows.Forms;
 
 namespace PharmacyManagement
 {
-    public partial class PharmacyCheckout : Form
+    public partial class BuyPharmacyCheckout : Form
     {
         DataTable dt1;
         Medicine m = new Medicine();
-        Sell s = new Sell();
+        Buy b = new Buy();
         Pharmacy ph = new Pharmacy();
         string user;
         string globalid;
-        public PharmacyCheckout(DataTable dt, string username, string globalID)
+        public BuyPharmacyCheckout(DataTable dt, string username, string globalID)
         {
             InitializeComponent();
             dt1 = dt;
@@ -26,19 +26,14 @@ namespace PharmacyManagement
             globalid = globalID;
         }
 
-        private void PharmacyCheckout_Load(object sender, EventArgs e)
+        private void BuyPharmacyCheckout_Load(object sender, EventArgs e)
         {
             DataTable dt2 = ph.checkoutPharmacy(user);
             dataGridView2.DataSource = dt2;
             float price = 0;
 
             dataGridView1.DataSource = dt1;
-            DataGridViewButtonColumn col = new DataGridViewButtonColumn();
-            col.HeaderText = "Details";
-            col.Text = "Details";
-            col.UseColumnTextForButtonValue = true;
-            dataGridView1.Columns.Add(col);
-
+            
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 price += float.Parse(row.Cells[3].Value.ToString()) * float.Parse(row.Cells[2].Value.ToString());
@@ -50,29 +45,12 @@ namespace PharmacyManagement
 
             label4.Text = price.ToString() + "$";
 
-            label8.Text = "Push details button to see...";
-            label10.Text = "Push details button to see...";
-            label12.Text = "Push details button to see...";
         }
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 4 && e.RowIndex > -1)
             {
-                DataTable dt = m.GetUsageDetails(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString(), globalid);
-
-                label8.Text = dt.Rows[0].Field<string>(0);
-                label10.Text = dt.Rows[0].Field<string>(2);
-                if(dt.Rows[0].Field<string>(3) == "0")
-                {
-                    label12.Text = "Doesn't need doctor report to sell.";
-                }
-                else if (dt.Rows[0].Field<string>(3) == "1")
-                {
-                    label12.Text = "Need doctor report to sell.";
-                }
-                richTextBox1.Text = dt.Rows[0].Field<string>(1);
-
+                DataTable dt = m.GetUsageDetails(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString(),user);
             }
         }
 
@@ -80,10 +58,9 @@ namespace PharmacyManagement
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                s.SellMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
+                b.BuyMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
             }
             this.Close();
         }
-
     }
 }

@@ -12,11 +12,10 @@ namespace PharmacyManagement
         public void SellMedicine(string name,int stock,int quantity, string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("update medicines_{0} set Stock = @Stock where Name= @Name", globalID);
+            string query = String.Format("update medicines_{0} set Stock = Stock - @quantity where Name= @Name", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", name));
-            int st = stock - quantity;
-            cmd.Parameters.Add(new SQLiteParameter("@Stock", st));
+            cmd.Parameters.Add(new SQLiteParameter("@quantity", quantity));
             con.Open();
             cmd.ExecuteNonQuery();
         }

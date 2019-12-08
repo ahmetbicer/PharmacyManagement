@@ -894,8 +894,7 @@ namespace PharmacyManagement
         {
             if (dataGridView7.Rows.Count != 0)
             {
-                PharmacyCheckout c = new PharmacyCheckout(dt7, globalID, dataGridView2.Rows[index7].Cells[0].Value.ToString());
-
+                BuyPharmacyCheckout c = new BuyPharmacyCheckout(dt7,dataGridView2.Rows[index7].Cells[0].Value.ToString(),globalID);
                 c.StartPosition = FormStartPosition.Manual;
                 c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
                 c.ShowDialog();
@@ -1050,54 +1049,54 @@ namespace PharmacyManagement
 
         private void changePharmacyMed()
         {
-            DataTable dt = m.CartMedicine(dataGridView2.Rows[index7].Cells[0].Value.ToString());
-            //DataTable dt = m.CartMedicine(globalID);
-            dataGridView11.Columns.Clear();
-
-            DataGridViewImageColumn col5 = new DataGridViewImageColumn();
-            col5.Name = "Img";
-            col5.HeaderText = "Img";
-            col5.Image = Properties.Resources.image;
-            dataGridView11.Columns.Add(col5);
-            dataGridView11.DataSource = dt;
-
-
-            DataGridViewButtonColumn col1 = new DataGridViewButtonColumn();
-            col1.HeaderText = "-";
-            col1.Text = "-";
-            col1.Width = 30;
-            col1.UseColumnTextForButtonValue = true;
-            dataGridView11.Columns.Add(col1);
-            DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
-            col3.HeaderText = "Quantity";
-            col3.Width = 70;
-            dataGridView11.Columns.Add(col3);
-            DataGridViewButtonColumn col2 = new DataGridViewButtonColumn();
-            col2.HeaderText = "+";
-            col2.Text = "+";
-            col2.Width = 30;
-            col2.UseColumnTextForButtonValue = true;
-            dataGridView11.Columns.Add(col2);
-            DataGridViewButtonColumn col = new DataGridViewButtonColumn();
-            col.HeaderText = "Add to Cart";
-            col.Text = "Add";
-            col.UseColumnTextForButtonValue = true;
-            dataGridView11.Columns.Add(col);
-
-            foreach (DataGridViewColumn column in dataGridView11.Columns)
+            if(index7 > -1)
             {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                DataTable dt = m.CartMedicine(dataGridView2.Rows[index7].Cells[0].Value.ToString());
+                //DataTable dt = m.CartMedicine(globalID);
+                dataGridView11.Columns.Clear();
+
+                DataGridViewImageColumn col5 = new DataGridViewImageColumn();
+                col5.Name = "Img";
+                col5.HeaderText = "Img";
+                col5.Image = Properties.Resources.image;
+                dataGridView11.Columns.Add(col5);
+                dataGridView11.DataSource = dt;
+
+                DataGridViewButtonColumn col1 = new DataGridViewButtonColumn();
+                col1.HeaderText = "-";
+                col1.Text = "-";
+                col1.Width = 30;
+                col1.UseColumnTextForButtonValue = true;
+                dataGridView11.Columns.Add(col1);
+                DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
+                col3.HeaderText = "Quantity";
+                col3.Width = 70;
+                dataGridView11.Columns.Add(col3);
+                DataGridViewButtonColumn col2 = new DataGridViewButtonColumn();
+                col2.HeaderText = "+";
+                col2.Text = "+";
+                col2.Width = 30;
+                col2.UseColumnTextForButtonValue = true;
+                dataGridView11.Columns.Add(col2);
+                DataGridViewButtonColumn col = new DataGridViewButtonColumn();
+                col.HeaderText = "Add to Cart";
+                col.Text = "Add";
+                col.UseColumnTextForButtonValue = true;
+                dataGridView11.Columns.Add(col);
+
+                foreach (DataGridViewColumn column in dataGridView11.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
+                foreach (DataGridViewRow row in dataGridView11.Rows)
+                {
+                    dataGridView11.Rows[row.Index].Cells[5].Value = 0;
+
+                }
             }
-
-            foreach (DataGridViewRow row in dataGridView11.Rows)
-            {
-                dataGridView11.Rows[row.Index].Cells[5].Value = 0;
-
-            }
-
-
-            //DataTable dt5 = ph.cartPharmacy(globalID);
-            //dataGridView2.DataSource = dt5;
+           
+            
         }
 
         private void textBox22_TextChanged(object sender, EventArgs e)
@@ -1188,8 +1187,7 @@ namespace PharmacyManagement
         {
             if (dataGridView13.Rows.Count != 0)
             {
-                PharmacyCheckout c = new PharmacyCheckout(dt13, dataGridView12.Rows[index9].Cells[0].Value.ToString(), globalID);
-
+                BuyFactoryCheckout c = new BuyFactoryCheckout(dt13, dataGridView12.Rows[index9].Cells[0].Value.ToString(), globalID);
                 c.StartPosition = FormStartPosition.Manual;
                 c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
                 c.ShowDialog();
@@ -1340,50 +1338,52 @@ namespace PharmacyManagement
 
         private void changeFactoryMed()
         {
-            DataTable dt = m.CartFactory(dataGridView12.Rows[index9].Cells[0].Value.ToString());
-            dataGridView14.Columns.Clear();
-
-            DataGridViewImageColumn col5 = new DataGridViewImageColumn();
-            col5.Name = "Img";
-            col5.HeaderText = "Img";
-            col5.Image = Properties.Resources.image;
-            dataGridView14.Columns.Add(col5);
-            dataGridView14.DataSource = dt;
-
-            DataGridViewButtonColumn col1 = new DataGridViewButtonColumn();
-            col1.HeaderText = "-";
-            col1.Text = "-";
-            col1.Width = 30;
-            col1.UseColumnTextForButtonValue = true;
-            dataGridView14.Columns.Add(col1);
-            DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
-            col3.HeaderText = "Quantity";
-            col3.Width = 70;
-            dataGridView14.Columns.Add(col3);
-            DataGridViewButtonColumn col2 = new DataGridViewButtonColumn();
-            col2.HeaderText = "+";
-            col2.Text = "+";
-            col2.Width = 30;
-            col2.UseColumnTextForButtonValue = true;
-            dataGridView14.Columns.Add(col2);
-            DataGridViewButtonColumn col = new DataGridViewButtonColumn();
-            col.HeaderText = "Add to Cart";
-            col.Text = "Add";
-            col.UseColumnTextForButtonValue = true;
-            dataGridView14.Columns.Add(col);
-
-            foreach (DataGridViewColumn column in dataGridView14.Columns)
+            if(index9 > -1)
             {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                DataTable dt = m.CartFactory(dataGridView12.Rows[index9].Cells[0].Value.ToString());
+                dataGridView14.Columns.Clear();
+
+                DataGridViewImageColumn col5 = new DataGridViewImageColumn();
+                col5.Name = "Img";
+                col5.HeaderText = "Img";
+                col5.Image = Properties.Resources.image;
+                dataGridView14.Columns.Add(col5);
+                dataGridView14.DataSource = dt;
+            
+                DataGridViewButtonColumn col1 = new DataGridViewButtonColumn();
+                col1.HeaderText = "-";
+                col1.Text = "-";
+                col1.Width = 30;
+                col1.UseColumnTextForButtonValue = true;
+                dataGridView14.Columns.Add(col1);
+                DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
+                col3.HeaderText = "Quantity";
+                col3.Width = 70;
+                dataGridView14.Columns.Add(col3);
+                DataGridViewButtonColumn col2 = new DataGridViewButtonColumn();
+                col2.HeaderText = "+";
+                col2.Text = "+";
+                col2.Width = 30;
+                col2.UseColumnTextForButtonValue = true;
+                dataGridView14.Columns.Add(col2);
+                DataGridViewButtonColumn col = new DataGridViewButtonColumn();
+                col.HeaderText = "Add to Cart";
+                col.Text = "Add";
+                col.UseColumnTextForButtonValue = true;
+                dataGridView14.Columns.Add(col);
+
+                foreach (DataGridViewColumn column in dataGridView14.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
+                foreach (DataGridViewRow row in dataGridView14.Rows)
+                {
+                    dataGridView14.Rows[row.Index].Cells[5].Value = 0;
+
+                }
+
             }
-
-            foreach (DataGridViewRow row in dataGridView14.Rows)
-            {
-                dataGridView14.Rows[row.Index].Cells[5].Value = 0;
-
-            }
-
-
         }
 
 

@@ -51,12 +51,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuyFactoryCheckout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuyFactoryCheckout.Designer.cs">
+      <DependentUpon>BuyFactoryCheckout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BuyPharmacyCheckout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuyPharmacyCheckout.Designer.cs">
+      <DependentUpon>BuyPharmacyCheckout.cs</DependentUpon>
+    </Compile>
     <Compile Include="Checkout.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Checkout.Designer.cs">
       <DependentUpon>Checkout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Buy.cs" />
     <Compile Include="Classes\Medicine.cs" />
     <Compile Include="Classes\MedicineFactories.cs" />
     <Compile Include="Classes\Patient.cs" />
@@ -94,6 +107,12 @@
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BuyFactoryCheckout.resx">
+      <DependentUpon>BuyFactoryCheckout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BuyPharmacyCheckout.resx">
+      <DependentUpon>BuyPharmacyCheckout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Checkout.resx">
       <DependentUpon>Checkout.cs</DependentUpon>
     </EmbeddedResource>
