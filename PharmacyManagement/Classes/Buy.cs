@@ -56,7 +56,7 @@ namespace PharmacyManagement
         public void InsertUsageInfo(string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("insert into medicines_{0}_usage(Dose,Definition,Ingredients,Report) Values('fill','fill','fill','fill')", globalID);
+            string query = String.Format("insert into medicines_{0}_usage(Dose,Definition,Ingredients,Report) Values('###','###','###','###')", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             con.Open();
             cmd.ExecuteNonQuery();

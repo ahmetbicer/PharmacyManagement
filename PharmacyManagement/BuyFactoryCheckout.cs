@@ -59,7 +59,6 @@ namespace PharmacyManagement
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                //s.SellMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
                 b.BuyMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
             }
             this.Close();

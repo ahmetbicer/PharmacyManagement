@@ -100,7 +100,7 @@ namespace PharmacyManagement
             }
         }
 
-        public void DeleteMedicine(string medName,string id,string globalID)
+        public void DeleteMedicine(string medName,int id,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
             string query1 = String.Format("delete from medicines_{0} where Name = @Name;", globalID);

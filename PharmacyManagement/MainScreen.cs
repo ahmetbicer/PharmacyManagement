@@ -17,6 +17,7 @@ namespace PharmacyManagement
         Patient p = new Patient();
         Pharmacy ph = new Pharmacy();
         MedicineFactories mf = new MedicineFactories();
+        Employee emp = new Employee();
 
         OpenFileDialog open = new OpenFileDialog();
         OpenFileDialog open1 = new OpenFileDialog();
@@ -36,8 +37,10 @@ namespace PharmacyManagement
         int index8;
         int index9;
         int index10;
+        int index11;
 
         string globalID;
+        string employeeName;
         int sellIndex;
         int sellIndex2;
         int sellIndex3;
@@ -51,6 +54,15 @@ namespace PharmacyManagement
         {
             InitializeComponent();
             globalID = username;
+        }
+
+        public MainScreen(string empUsername,string pharmacyName)
+        {
+            InitializeComponent();
+            employeeName = empUsername;
+            globalID = pharmacyName;
+            tabControl1.TabPages[1].Enabled = false;
+            tabControl1.TabPages[4].Enabled = false;
         }
 
         private void MainScreen_Load(object sender, EventArgs e)
@@ -113,7 +125,7 @@ namespace PharmacyManagement
         private void logoutBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var l = new Login();
+            var l = new LoginScreen();
             l.Closed += (s, args) => this.Close();
             l.StartPosition = FormStartPosition.Manual;
             l.Location = new Point(this.Location.X, this.Location.Y);
@@ -122,12 +134,8 @@ namespace PharmacyManagement
 
         private void settingsBtn_Click(object sender, EventArgs e)
         {
-            /*this.Hide();
             Settings se = new Settings();
-            se.Closed += (s, args) => this.Close();
-            se.StartPosition = FormStartPosition.Manual;
-            se.Location = new Point(this.Location.X, this.Location.Y);
-            se.Show();*/
+            se.ShowDialog();
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -150,7 +158,7 @@ namespace PharmacyManagement
             }
             if (tabControl1.SelectedTab == tabControl1.TabPages[4])
             {
-
+                viewEmployees();
             }
         }
 
@@ -191,6 +199,14 @@ namespace PharmacyManagement
             if (tabControl5.SelectedTab == tabControl5.TabPages[1])
             {
                 buy_from_medicine_factories();
+            }
+        }
+
+        private void tabControl6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(tabControl6.SelectedTab == tabControl6.TabPages[0])
+            {
+                viewEmployees();
             }
         }
 
@@ -260,8 +276,6 @@ namespace PharmacyManagement
         private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             index2 = e.RowIndex;
-            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
-            textBox6.Text = selectedRow.Cells[1].Value.ToString();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -270,7 +284,7 @@ namespace PharmacyManagement
             DataGridViewRow selectedRow = dataGridView3.Rows[index];
             string medName = selectedRow.Cells[0].Value.ToString();
             int id = selectedRow.Index + 1;
-            m.DeleteMedicine(medName,id.ToString(), globalID);
+            m.DeleteMedicine(medName,id, globalID);
             tabControl2.SelectedIndex = 1;
             tabControl2.SelectedIndex = 0;
         }
@@ -286,7 +300,6 @@ namespace PharmacyManagement
             richTextBox2.Text = selectedRow.Cells[4].Value.ToString();
             richTextBox1.Text = selectedRow.Cells[5].Value.ToString();
             textBox2.Text = selectedRow.Cells[6].Value.ToString();
-
             tabControl2.SelectedIndex = 2;
         }
 
@@ -377,8 +390,6 @@ namespace PharmacyManagement
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             index = e.RowIndex;
-            DataGridViewRow selectedRow = dataGridView3.Rows[index];
-            textBox1.Text = selectedRow.Cells[1].Value.ToString();
         }
 
         private void textBox13_TextChanged(object sender, EventArgs e)
@@ -1437,6 +1448,71 @@ namespace PharmacyManagement
             {
                 dataGridView14.Rows[row.Index].Cells[5].Value = 0;
             }
+        }
+
+        //employees
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            emp.AddEmployee(textBox24.Text, textBox28.Text, textBox34.Text, textBox26.Text, textBox21.Text, textBox37.Text, textBox27.Text, globalID);
+            textBox24.Clear();
+            textBox28.Clear();
+            textBox34.Clear();
+            textBox26.Clear();
+            textBox21.Clear();
+            textBox37.Clear();
+            textBox27.Clear();
+            label63.ForeColor = Color.Green;
+            label63.Text = "Added Succesfully";
+        }
+
+        private void viewEmployees()
+        {
+            dataGridView15.DataSource = emp.viewEmployees(globalID);
+            DataGridViewColumn column = dataGridView15.Columns[0];
+            column.Width = 120;
+            dataGridView15.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+        }
+
+        private void dataGridView15_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index11 = e.RowIndex;
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = dataGridView15.Rows[index11];
+            textBox29.Text = selectedRow.Cells[0].Value.ToString();
+            textBox32.Text = selectedRow.Cells[1].Value.ToString();
+            textBox33.Text = selectedRow.Cells[2].Value.ToString();
+            textBox30.Text = selectedRow.Cells[3].Value.ToString();
+            textBox36.Text = selectedRow.Cells[4].Value.ToString();
+            textBox35.Text = selectedRow.Cells[5].Value.ToString();
+            textBox31.Text = "*********";
+            tabControl6.SelectedIndex = 2;
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            emp.UpdateEmployee(textBox29.Text, textBox32.Text, textBox33.Text, textBox30.Text, textBox36.Text, textBox35.Text, textBox31.Text);
+            textBox29.Clear();
+            textBox32.Clear();
+            textBox33.Clear();
+            textBox30.Clear();
+            textBox36.Clear();
+            textBox35.Clear();
+            textBox31.Clear();
+            label64.ForeColor = Color.Green;
+            label64.Text = "Updated Successfully";
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = dataGridView15.Rows[index11];
+            string EmployeeID = selectedRow.Cells[0].Value.ToString();
+            emp.deleteEmployee(EmployeeID);
+            tabControl6.SelectedIndex = 1;
+            tabControl6.SelectedIndex = 0;
         }
     }
 }

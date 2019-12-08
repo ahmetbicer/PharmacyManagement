@@ -70,6 +70,7 @@
       <DependentUpon>Checkout.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Buy.cs" />
+    <Compile Include="Classes\Employee.cs" />
     <Compile Include="Classes\Medicine.cs" />
     <Compile Include="Classes\MedicineFactories.cs" />
     <Compile Include="Classes\Patient.cs" />
@@ -80,6 +81,18 @@
     </Compile>
     <Compile Include="Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginAsEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginAsEmployee.Designer.cs">
+      <DependentUpon>LoginAsEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginScreen.Designer.cs">
+      <DependentUpon>LoginScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="MainScreen.cs">
       <SubType>Form</SubType>
@@ -118,6 +131,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginAsEmployee.resx">
+      <DependentUpon>LoginAsEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginScreen.resx">
+      <DependentUpon>LoginScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainScreen.resx">
       <DependentUpon>MainScreen.cs</DependentUpon>

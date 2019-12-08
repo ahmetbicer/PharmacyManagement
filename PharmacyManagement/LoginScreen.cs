@@ -7,28 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SQLite;
+
 namespace PharmacyManagement
 {
-    public partial class Register : Form
+    public partial class LoginScreen : Form
     {
-        Pharmacy p = new Pharmacy();
-        public Register()
+        public LoginScreen()
         {
             InitializeComponent();
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            this.Hide();
+            var l = new Login();
+            l.Closed += (s, args) => this.Close();
+            l.StartPosition = FormStartPosition.Manual;
+            l.Location = new Point(this.Location.X, this.Location.Y);
+            l.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
             this.Hide();
-            var l = new LoginScreen();
+            var l = new LoginAsEmployee();
             l.Closed += (s, args) => this.Close();
             l.StartPosition = FormStartPosition.Manual;
             l.Location = new Point(this.Location.X, this.Location.Y);
@@ -37,20 +39,12 @@ namespace PharmacyManagement
 
         private void button3_Click(object sender, EventArgs e)
         {
-            p.AddPharmacy(username.Text,email.Text,password.Text);
-            username.Clear();
-            email.Clear();
-            password.Clear();
-            approval.Text = "Registered Successfully";
-        }
-
-        private void button3_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button3_Click(this, new EventArgs());
-            }
+            this.Hide();
+            var r = new Register();
+            r.Closed += (s, args) => this.Close();
+            r.StartPosition = FormStartPosition.Manual;
+            r.Location = new Point(this.Location.X, this.Location.Y);
+            r.Show();
         }
     }
-
-    }
+}

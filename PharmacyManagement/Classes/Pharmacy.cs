@@ -15,7 +15,7 @@ namespace PharmacyManagement
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
             string query1 = String.Format("insert into pharmacyList (Username,Email,Password) values(@Username,@Email,@Password);");
-            string query2 = String.Format("CREATE TABLE medicines_{0}('MedId' INTEGER,'Name'  TEXT, 'Stock' TEXT,'Price'    TEXT,'ImgPath'    TEXT,PRIMARY KEY('MedId'));", username);
+            string query2 = String.Format("CREATE TABLE medicines_{0}('MedId' INTEGER,'Name'  TEXT UNIQUE, 'Stock' TEXT,'Price'    TEXT DEFAULT '###','ImgPath'    TEXT,PRIMARY KEY('MedId'));", username);
             string query3 = String.Format("CREATE TABLE medicines_{0}_usage('MedId' INTEGER,'Dose'  TEXT, 'Definition' TEXT,'Ingredients'    TEXT,'Report' TEXT,PRIMARY KEY('MedId'));", username);
             string query4 = String.Format("CREATE TABLE patients_{0} ('PatId' INTEGER,'ID'    INTEGER,'Name'  TEXT,'Surname'   TEXT,'Age'   INTEGER,'City'  TEXT,'HaveReport'    INTEGER,PRIMARY KEY('PatId')); ", username);
             string query = query1 + query2 + query3 + query4;

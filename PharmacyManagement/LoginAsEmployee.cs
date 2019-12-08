@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,40 +10,30 @@ using System.Windows.Forms;
 
 namespace PharmacyManagement
 {
-    public partial class Login : Form
+    public partial class LoginAsEmployee : Form
     {
-        Pharmacy p = new Pharmacy();
-        public Login()
+        Employee emp = new Employee();
+        public LoginAsEmployee()
         {
             InitializeComponent();
         }
 
-
-        private void Button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            int r = p.Login(textBox1.Text,textBox2.Text);
-            if(r == 1)
+            int r = emp.Login(textBox1.Text, textBox2.Text);
+            if (r == 1)
             {
+                string pName = emp.getPharmacy(textBox1.Text);
                 this.Hide();
-                var m = new MainScreen(textBox1.Text);
+                var m = new MainScreen(textBox1.Text,pName);
                 m.Closed += (s, args) => this.Close();
                 m.StartPosition = FormStartPosition.Manual;
                 m.Location = new Point(this.Location.X, this.Location.Y);
                 m.Show();
             }
-            if(r == 0)
+            if (r == 0)
             {
                 MessageBox.Show("Username or password is wrong!");
-            }
-            
-
-        }
-
-        private void textBox2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                Button1_Click(this, new EventArgs());
             }
         }
 
