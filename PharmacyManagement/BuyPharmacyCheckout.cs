@@ -16,8 +16,11 @@ namespace PharmacyManagement
         Medicine m = new Medicine();
         Buy b = new Buy();
         Pharmacy ph = new Pharmacy();
+        Logs l = new Logs();
+
         string user;
         string globalid;
+
         public BuyPharmacyCheckout(DataTable dt, string username, string globalID)
         {
             InitializeComponent();
@@ -59,6 +62,7 @@ namespace PharmacyManagement
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 b.BuyMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
+                l.AddLogs(String.Format("{0}  -  '{1}' buy the medicine '{2}' from pharmacy  '{3}'", DateTime.Now.ToString(), globalid, row.Cells[0].Value.ToString(), user), globalid);
             }
             this.Close();
         }

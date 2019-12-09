@@ -16,14 +16,29 @@ namespace PharmacyManagement
         Medicine m = new Medicine();
         Sell s = new Sell();
         Pharmacy ph = new Pharmacy();
+        Logs l = new Logs();
+
         string user;
         string globalid;
+        string empName;
+
+        bool isEmployee = false;
         public PharmacyCheckout(DataTable dt, string username, string globalID)
         {
             InitializeComponent();
             dt1 = dt;
             user = username;
             globalid = globalID;
+        }
+
+        public PharmacyCheckout(DataTable dt, string username, string empUsername, string globalID)
+        {
+            InitializeComponent();
+            dt1 = dt;
+            user = username;
+            globalid = globalID;
+            empName = empUsername;
+            isEmployee = true;
         }
 
         private void PharmacyCheckout_Load(object sender, EventArgs e)
@@ -81,6 +96,14 @@ namespace PharmacyManagement
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 s.SellMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
+                if (isEmployee)
+                {
+                    l.AddLogs(String.Format("{0}  -  '{1}' sell the medicine '{2}' to pharmacy  '{3}'", DateTime.Now.ToString(), empName, row.Cells[0].Value.ToString(), user), globalid);
+                }
+                else
+                {
+                    l.AddLogs(String.Format("{0}  -  '{1}' sell the medicine '{2}' to pharmacy  '{3}'", DateTime.Now.ToString(), globalid, row.Cells[0].Value.ToString(), user), globalid);
+                }
             }
             this.Close();
         }

@@ -17,7 +17,7 @@ namespace PharmacyManagement
             string query1 = String.Format("insert into pharmacyList (Username,Email,Password) values(@Username,@Email,@Password);");
             string query2 = String.Format("CREATE TABLE medicines_{0}('MedId' INTEGER,'Name'  TEXT UNIQUE, 'Stock' TEXT,'Price'    TEXT DEFAULT '###','ImgPath'    TEXT,PRIMARY KEY('MedId'));", username);
             string query3 = String.Format("CREATE TABLE medicines_{0}_usage('MedId' INTEGER,'Dose'  TEXT, 'Definition' TEXT,'Ingredients'    TEXT,'Report' TEXT,PRIMARY KEY('MedId'));", username);
-            string query4 = String.Format("CREATE TABLE patients_{0} ('PatId' INTEGER,'ID'    INTEGER,'Name'  TEXT,'Surname'   TEXT,'Age'   INTEGER,'City'  TEXT,'HaveReport'    INTEGER,PRIMARY KEY('PatId')); ", username);
+            string query4 = String.Format("CREATE TABLE logs_{0}('LogsId' INTEGER,'Logs'  TEXT,PRIMARY KEY('LogsId'));", username);
             string query = query1 + query2 + query3 + query4;
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Username", username));
@@ -35,7 +35,7 @@ namespace PharmacyManagement
             string query2 = String.Format("delete from employeeList where PharmacyName = @Username;");
             string query3 = String.Format("drop table medicines_{0};",username);
             string query4 = String.Format("drop table medicines_{0}_usage;", username);
-            string query5 = String.Format("drop table patients_{0};", username);
+            string query5 = String.Format("drop table logs_{0};", username);
             string query = query1 + query2 + query3 + query4 + query5;
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Username", username));

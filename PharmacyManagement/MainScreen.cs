@@ -18,6 +18,7 @@ namespace PharmacyManagement
         Pharmacy ph = new Pharmacy();
         MedicineFactories mf = new MedicineFactories();
         Employee emp = new Employee();
+        Logs l = new Logs();
 
         OpenFileDialog open = new OpenFileDialog();
         OpenFileDialog open1 = new OpenFileDialog();
@@ -46,9 +47,10 @@ namespace PharmacyManagement
         int sellIndex3;
         int sellIndex4;
 
-        string imgpath;
-        string imgpath2;
+        string imgpath = "";
+        string imgpath2 = "";
 
+        bool isEmployee = false;
 
         public MainScreen(string username)
         {
@@ -61,6 +63,7 @@ namespace PharmacyManagement
             InitializeComponent();
             employeeName = empUsername;
             globalID = pharmacyName;
+            isEmployee = true;
             tabControl1.TabPages[1].Enabled = false;
             tabControl1.TabPages[4].Enabled = false;
             tabControl1.TabPages[5].Enabled = false;
@@ -116,6 +119,11 @@ namespace PharmacyManagement
                 col4.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
+            foreach (DataGridViewColumn col5 in dataGridView16.Columns)
+            {
+                col5.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
 
             pictureBox1.Hide();
             pictureBox4.Hide();
@@ -161,7 +169,7 @@ namespace PharmacyManagement
             }
             if (tabControl1.SelectedTab == tabControl1.TabPages[5])
             {
-                updatePharmacy();
+                viewLogs();
             }
         }
 
@@ -216,7 +224,13 @@ namespace PharmacyManagement
         private void tabControl7_SelectedIndexChanged(object sender, EventArgs e)
         {
             button26.Enabled = false;
-            if(tabControl7.SelectedTab == tabControl7.TabPages[1])
+
+            if (tabControl7.SelectedTab == tabControl7.TabPages[0])
+            {
+                viewLogs();
+            }
+
+            if (tabControl7.SelectedTab == tabControl7.TabPages[1])
             {
                 updatePharmacy();
             }
@@ -252,6 +266,15 @@ namespace PharmacyManagement
         private void button3_Click(object sender, EventArgs e)
         {
             m.AddMedicine(name.Text, stock.Text, price.Text,dose.Text,report.Text,definition.Text,ingredients.Text, imgpath, globalID);
+            if (isEmployee)
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' added the medicine '{2}'", DateTime.Now.ToString(), employeeName, name.Text), globalID);
+            }
+            else
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' added the medicine '{2}'", DateTime.Now.ToString(), globalID, name.Text), globalID);
+
+            }
             name.Clear();
             stock.Clear();
             price.Clear();
@@ -276,6 +299,15 @@ namespace PharmacyManagement
         private void button2_Click(object sender, EventArgs e)
         {
             p.addPatient(ID.Text, pat_name.Text, pat_surname.Text, pat_age.Text, pat_city.Text, pat_report.Text, globalID);
+            if (isEmployee)
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' added the patient '{2}'", DateTime.Now.ToString(), employeeName, pat_name.Text), globalID);
+            }
+            else
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' added the patient '{2}'", DateTime.Now.ToString(), globalID, pat_name.Text), globalID);
+
+            }
             ID.Clear();
             pat_name.Clear();
             pat_surname.Clear();
@@ -298,6 +330,17 @@ namespace PharmacyManagement
             string medName = selectedRow.Cells[0].Value.ToString();
             int id = selectedRow.Index + 1;
             m.DeleteMedicine(medName,id, globalID);
+
+            if (isEmployee)
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' deleted the medicine '{2}'", DateTime.Now.ToString(), employeeName, medName), globalID);
+            }
+            else
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' deleted the medicine '{2}'", DateTime.Now.ToString(), globalID, medName), globalID);
+
+            }
+
             tabControl2.SelectedIndex = 1;
             tabControl2.SelectedIndex = 0;
         }
@@ -329,7 +372,17 @@ namespace PharmacyManagement
             {
                 m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, textBox2.Text, imgpath2, globalID);
             }
-            
+
+            if (isEmployee)
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' updated the medicine '{2}'", DateTime.Now.ToString(), employeeName, textBox4.Text), globalID);
+            }
+            else
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' updated the medicine '{2}'", DateTime.Now.ToString(), globalID, textBox4.Text), globalID);
+
+            }
+
             textBox4.Clear();
             textBox16.Clear();
             textBox3.Clear();
@@ -384,6 +437,16 @@ namespace PharmacyManagement
             string patCity = textBox11.Text;
             string patHaveReport = textBox9.Text;
             p.updatePatient(patPatId, patID, patName, patSurname, patAge, patCity, patHaveReport, globalID);
+            if (isEmployee)
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' updated the patient '{2}'", DateTime.Now.ToString(), employeeName, textBox8.Text), globalID);
+            }
+            else
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' updated the patient '{2}'", DateTime.Now.ToString(), globalID, textBox8.Text), globalID);
+
+            }
+
             textBox7.Clear();
             textBox8.Clear();
             textBox10.Clear();
@@ -398,6 +461,15 @@ namespace PharmacyManagement
             DataGridViewRow selectedRow = dataGridView4.Rows[index2];
             string patPatId = selectedRow.Cells[0].Value.ToString();
             p.deletePatient(patPatId, globalID);
+            if (isEmployee)
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' deleted the patient '{2}'", DateTime.Now.ToString(), employeeName, patPatId), globalID);
+            }
+            else
+            {
+                l.AddLogs(String.Format("{0}  -  '{1}' deleted the patient '{2}'", DateTime.Now.ToString(), globalID, patPatId), globalID);
+
+            }
         }
 
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -598,13 +670,26 @@ namespace PharmacyManagement
         {
             if (dataGridView6.Rows.Count != 0)//
             {
-                Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(), globalID);
+                if (isEmployee)
+                {
+                    Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(),employeeName,globalID);
 
-                c.StartPosition = FormStartPosition.Manual;
-                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
-                c.ShowDialog();
+                    c.StartPosition = FormStartPosition.Manual;
+                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.ShowDialog();
 
-                dt3.Rows.Clear();
+                    dt3.Rows.Clear();
+                }
+                else
+                {
+                    Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(), globalID);
+
+                    c.StartPosition = FormStartPosition.Manual;
+                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.ShowDialog();
+
+                    dt3.Rows.Clear();
+                }
             }
         }
 
@@ -680,13 +765,27 @@ namespace PharmacyManagement
         {
             if (dataGridView8.Rows.Count != 0)
             {
-                PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(),globalID);
+                if (isEmployee)
+                {
+                    PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(),employeeName,globalID);
 
-                c.StartPosition = FormStartPosition.Manual;
-                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
-                c.ShowDialog();
+                    c.StartPosition = FormStartPosition.Manual;
+                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.ShowDialog();
 
-                dt4.Rows.Clear();
+                    dt4.Rows.Clear();
+                }
+                else
+                {
+                    PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(), globalID);
+
+                    c.StartPosition = FormStartPosition.Manual;
+                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.ShowDialog();
+
+                    dt4.Rows.Clear();
+                }
+               
             }
         }
 
@@ -1570,6 +1669,12 @@ namespace PharmacyManagement
             tabControl7.SelectedIndex = 1;
             label74.ForeColor = Color.Green;
             label74.Text = "Updated Successfully";
+        }
+
+        private void viewLogs()
+        {
+            DataTable dt = l.SeeLogs(globalID);
+            dataGridView16.DataSource = dt;
         }
     }
 }

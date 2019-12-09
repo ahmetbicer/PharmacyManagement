@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Classes\Buy.cs" />
     <Compile Include="Classes\Employee.cs" />
+    <Compile Include="Classes\Logs.cs" />
     <Compile Include="Classes\Medicine.cs" />
     <Compile Include="Classes\MedicineFactories.cs" />
     <Compile Include="Classes\Patient.cs" />

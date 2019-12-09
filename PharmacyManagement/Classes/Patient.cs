@@ -14,7 +14,7 @@ namespace PharmacyManagement
         public void addPatient(string ID, string pat_name,string pat_surname,string pat_age,string pat_city,string pat_report,string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("insert into patients_{0} (ID,Name,Surname,Age,City,HaveReport) values(@ID,@Name,@Surname,@Age,@City,@HaveReport) ", globalID);
+            string query = "insert into patients (ID,Name,Surname,Age,City,HaveReport) values(@ID,@Name,@Surname,@Age,@City,@HaveReport) ";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@ID", ID));
             cmd.Parameters.Add(new SQLiteParameter("@Name", pat_name));
@@ -32,7 +32,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("select * from patients_{0}", globalID);
+                    string query = "select * from patients";
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         DataTable dt = new DataTable();
@@ -56,7 +56,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("select ID,Name,Surname from patients_{0}", globalID);
+                    string query = "select ID,Name,Surname from patients";
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         DataTable dt = new DataTable();
@@ -76,7 +76,7 @@ namespace PharmacyManagement
         public void deletePatient(string patPatId, string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("delete from patients_{0} where PatId = @PatId", globalID);
+            string query = "delete from patients where PatId = @PatId";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@PatId",patPatId));
             con.Open();
@@ -86,7 +86,7 @@ namespace PharmacyManagement
         public void updatePatient(string patPatId, string patID, string patName, string patSurname, string patAge, string patCity, string patHaveReport, string globalID)
         {
             SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
-            string query = String.Format("update patients_{0} set ID = @ID, Name = @Name, Surname = @Surname, Age = @Age, City = @City, HaveReport = @HaveReport where PatId = @PatId", globalID);
+            string query = "update patients set ID = @ID, Name = @Name, Surname = @Surname, Age = @Age, City = @City, HaveReport = @HaveReport where PatId = @PatId";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@PatId", patPatId));
             cmd.Parameters.Add(new SQLiteParameter("@ID", patID));
@@ -106,7 +106,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("SELECT ID,Name,Surname FROM patients_{0} where ID like @ID", globalID);
+                    string query = "SELECT ID,Name,Surname FROM patients where ID like @ID";
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         cmd.Parameters.Add(new SQLiteParameter("@ID", ID + "%"));
@@ -132,7 +132,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("select * from patients_{0} where ID = {1}", globalID,id);
+                    string query = String.Format("select * from patients where ID = {0}", id);
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         DataTable dt = new DataTable();
