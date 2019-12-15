@@ -57,7 +57,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("SELECT Name,Stock,Price FROM medicines_{0}", globalID);
+                    string query = String.Format("SELECT Name,Stock,Price FROM medicines_{0} where Price != '###'", globalID);
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         DataTable dt = new DataTable();
@@ -296,6 +296,57 @@ namespace PharmacyManagement
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        public DataTable ReadPrescription(string prescriptionID,string globalID)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = String.Format("select Name,Stock,Quantity,Price from medicines_{0} where MedId = (select med1 from prescription where prescriptionID = '{1}') or MedId = (select med2 from prescription where prescriptionID = '{1}') or MedId = (select med3 from prescription where prescriptionID = '{1}') or MedId = (select med4 from prescription where prescriptionID = '{1}');", globalID,prescriptionID);
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        return dt;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wrong Prescription Id!");
+                return null;
+            }
+        }
+
+        public string PrescriptionPatient(string prescriptionID)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                {
+                    conn.Open();
+                    string query = String.Format("select ID from patients where patID = (select patID from prescription where prescriptionID = '{0}')", prescriptionID);
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        string id = dt.Rows[0].ItemArray[0].ToString();
+                        return id;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Wrong Patient Id!");
                 return null;
             }
         }

@@ -34,7 +34,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Video.2.2.5\lib\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Video.DirectShow.2.2.5\lib\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -49,8 +62,20 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="zxing, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net47\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net47\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarcodeScanner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BarcodeScanner.Designer.cs">
+      <DependentUpon>BarcodeScanner.cs</DependentUpon>
+    </Compile>
     <Compile Include="BuyFactoryCheckout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,18 +102,6 @@
     <Compile Include="Classes\Patient.cs" />
     <Compile Include="Classes\Pharmacy.cs" />
     <Compile Include="Classes\Sell.cs" />
-    <Compile Include="Login.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LoginAsEmployee.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LoginAsEmployee.Designer.cs">
-      <DependentUpon>LoginAsEmployee.cs</DependentUpon>
-    </Compile>
     <Compile Include="LoginScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +128,9 @@
     <Compile Include="Register.Designer.cs">
       <DependentUpon>Register.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BarcodeScanner.resx">
+      <DependentUpon>BarcodeScanner.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BuyFactoryCheckout.resx">
       <DependentUpon>BuyFactoryCheckout.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,12 +139,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Checkout.resx">
       <DependentUpon>Checkout.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LoginAsEmployee.resx">
-      <DependentUpon>LoginAsEmployee.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginScreen.resx">
       <DependentUpon>LoginScreen.cs</DependentUpon>
@@ -152,6 +162,7 @@
     <EmbeddedResource Include="Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -170,6 +181,9 @@
     <Content Include="Assets\Icons\add-user.png" />
     <Content Include="Assets\Icons\clipboard.png" />
     <Content Include="Assets\Icons\commerce.png" />
+    <Content Include="Assets\Icons\qr-code %281%29.png" />
+    <Content Include="Assets\Icons\qr-code %282%29.png" />
+    <Content Include="Assets\Icons\qr-code %283%29.png" />
     <Content Include="Assets\Images\med1.png" />
     <Content Include="Assets\Icons\controls.png" />
     <Content Include="Assets\Images\med2.png" />
@@ -189,6 +203,9 @@
     <Content Include="Assets\Icons\settings.png" />
     <Content Include="Assets\Icons\trade.png" />
     <Content Include="Assets\Icons\rubbish-bin.png" />
+    <Content Include="Assets\Icons\qr-code.png" />
+    <Content Include="Assets\Icons\supermarket-scanner.png" />
+    <Content Include="Assets\Icons\rod-of-asclepius11.ico" />
     <Content Include="Properties\Image1.png" />
     <None Include="Resources\Image3.bmp" />
     <None Include="Resources\Image2.png" />

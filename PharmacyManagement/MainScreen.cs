@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace PharmacyManagement
 {
     public partial class MainScreen : Form
@@ -19,6 +20,7 @@ namespace PharmacyManagement
         MedicineFactories mf = new MedicineFactories();
         Employee emp = new Employee();
         Logs l = new Logs();
+        BarcodeScanner bs = new BarcodeScanner();
 
         OpenFileDialog open = new OpenFileDialog();
         OpenFileDialog open1 = new OpenFileDialog();
@@ -56,6 +58,9 @@ namespace PharmacyManagement
         {
             InitializeComponent();
             globalID = username;
+            label76.Text = String.Format("Welcome to your pharmacy, {0}!", globalID);
+            textBox13.BackColor = System.Drawing.Color.FromArgb(30, 93, 185);
+
         }
 
         public MainScreen(string empUsername,string pharmacyName)
@@ -67,6 +72,8 @@ namespace PharmacyManagement
             tabControl1.TabPages[1].Enabled = false;
             tabControl1.TabPages[4].Enabled = false;
             tabControl1.TabPages[5].Enabled = false;
+
+            label76.Text = String.Format("Welcome to your pharmacy, {0}!", employeeName);
         }
 
         private void MainScreen_Load(object sender, EventArgs e)
@@ -132,6 +139,7 @@ namespace PharmacyManagement
 
             textBox6.Text = globalID;
             textBox6.ReadOnly = true;
+
         }
 
         private void logoutBtn_Click(object sender, EventArgs e)
@@ -651,7 +659,7 @@ namespace PharmacyManagement
                     pictureBox1.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
                 
-                pictureBox1.Location = new Point(rect.X + 353, rect.Y + 89);
+                pictureBox1.Location = new Point(rect.X + 470, rect.Y + 104);
                 pictureBox1.Width = 200;
                 pictureBox1.Height = 200;
                 pictureBox1.Show();
@@ -803,7 +811,7 @@ namespace PharmacyManagement
                     pictureBox4.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
 
-                pictureBox4.Location = new Point(rect.X + 353, rect.Y + 89);
+                pictureBox4.Location = new Point(rect.X + 470, rect.Y + 104);
                 pictureBox4.Width = 200;
                 pictureBox4.Height = 200;
                 pictureBox4.Show();
@@ -1040,7 +1048,7 @@ namespace PharmacyManagement
                     pictureBox2.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
 
-                pictureBox2.Location = new Point(rect.X + 353, rect.Y + 89);
+                pictureBox2.Location = new Point(rect.X + 470, rect.Y + 104);
                 pictureBox2.Width = 200;
                 pictureBox2.Height = 200;
                 pictureBox2.Show();
@@ -1333,7 +1341,7 @@ namespace PharmacyManagement
                     pictureBox6.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
 
-                pictureBox6.Location = new Point(rect.X + 353, rect.Y + 89);
+                pictureBox6.Location = new Point(rect.X + 470, rect.Y + 104);
                 pictureBox6.Width = 200;
                 pictureBox6.Height = 200;
                 pictureBox6.Show();
@@ -1675,6 +1683,86 @@ namespace PharmacyManagement
         {
             DataTable dt = l.SeeLogs(globalID);
             dataGridView16.DataSource = dt;
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            bs.StartPosition = FormStartPosition.Manual;
+            bs.Location = new Point(this.Location.X+820, this.Location.Y + 175);
+            var result = bs.ShowDialog();
+            if(result == DialogResult.OK)
+    {
+                string val = bs.decodedstr;
+
+                string[] tokens = val.Split(',');
+                name.Text = tokens[0];
+                dose.Text = tokens[1];
+                report.Text = tokens[2];
+                definition.Text = tokens[3];
+                ingredients.Text = tokens[4];
+            }
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            DataTable dt16 = m.ReadPrescription(textBox15.Text, globalID);
+            string patientid = m.PrescriptionPatient(textBox15.Text);
+            
+            if (isEmployee)
+            {
+
+                Checkout c = new Checkout(dt16, patientid, employeeName, globalID);
+
+                c.StartPosition = FormStartPosition.Manual;
+                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                c.ShowDialog();
+
+                dt3.Rows.Clear();
+            }
+            else
+            {
+                Checkout c = new Checkout(dt16, patientid, globalID);
+
+                c.StartPosition = FormStartPosition.Manual;
+                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                c.ShowDialog();
+
+                dt3.Rows.Clear();
+            }
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private bool mouseDown;
+        private Point lastLocation;
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+            }
+        }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
         }
     }
 }
