@@ -82,11 +82,11 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Neutrif Pro Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(173, 448);
+            this.label1.Location = new System.Drawing.Point(177, 448);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 18);
+            this.label1.Size = new System.Drawing.Size(158, 18);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Didn\'t have an account?";
+            this.label1.Text = "Don\'t have an account?";
             // 
             // label2
             // 
@@ -105,9 +105,9 @@
             // 
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Neutrif Pro", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox1.Location = new System.Drawing.Point(249, 322);
+            this.textBox1.Location = new System.Drawing.Point(213, 324);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(85, 23);
+            this.textBox1.Size = new System.Drawing.Size(186, 23);
             this.textBox1.TabIndex = 7;
             this.textBox1.Text = "username";
             this.textBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBox1_MouseDown);
@@ -116,9 +116,9 @@
             // 
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox2.Location = new System.Drawing.Point(232, 394);
+            this.textBox2.Location = new System.Drawing.Point(213, 394);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(124, 20);
+            this.textBox2.Size = new System.Drawing.Size(186, 20);
             this.textBox2.TabIndex = 8;
             this.textBox2.Text = "password....";
             this.textBox2.UseSystemPasswordChar = true;
@@ -165,21 +165,22 @@
             // 
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox4.Location = new System.Drawing.Point(818, 394);
+            this.textBox4.Location = new System.Drawing.Point(799, 394);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(124, 20);
+            this.textBox4.Size = new System.Drawing.Size(167, 20);
             this.textBox4.TabIndex = 12;
             this.textBox4.Text = "password....";
             this.textBox4.UseSystemPasswordChar = true;
+            this.textBox4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox4_KeyDown);
             this.textBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBox4_MouseDown);
             // 
             // textBox3
             // 
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox3.Font = new System.Drawing.Font("Neutrif Pro", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox3.Location = new System.Drawing.Point(835, 322);
+            this.textBox3.Location = new System.Drawing.Point(799, 324);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(85, 23);
+            this.textBox3.Size = new System.Drawing.Size(174, 23);
             this.textBox3.TabIndex = 11;
             this.textBox3.Text = "username";
             this.textBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBox3_MouseDown);

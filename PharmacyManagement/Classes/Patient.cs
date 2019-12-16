@@ -132,7 +132,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("select * from patients where ID = {0}", id);
+                    string query = String.Format("select ID,Name,Surname,Age,City from patients where ID = {0}", id);
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         DataTable dt = new DataTable();

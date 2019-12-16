@@ -1,8 +1,11 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,13 +45,13 @@ namespace PharmacyManagement
             isEmployee = true;
         }
 
-
+        float price = 0;
         private void Checkout_Load(object sender, EventArgs e)
         {
 
             DataTable dt2 = p.GetPatient(id, globalid);
             dataGridView2.DataSource = dt2;
-            float price = 0;
+            
 
             dataGridView1.DataSource = dt1;
             DataGridViewButtonColumn col = new DataGridViewButtonColumn();
@@ -110,7 +113,123 @@ namespace PharmacyManagement
                     l.AddLogs(String.Format("{0}  -  '{1}' sell the medicine '{2}' to patient ID '{3}'", DateTime.Now.ToString(), globalid, row.Cells[0].Value.ToString(), id), globalid);
                 }
             }
+
+            PdfPCell pcell = new PdfPCell();
+            pcell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            pcell.AddElement(new Phrase("Billing Information"));
+
+            PdfPTable pdfTable = new PdfPTable(dataGridView2.ColumnCount);
+            pdfTable.DefaultCell.Padding = 3;
+            pdfTable.HorizontalAlignment = Element.ALIGN_CENTER;
+            pdfTable.DefaultCell.BorderWidth = 1;
+
+            foreach (DataGridViewColumn column in dataGridView2.Columns)
+            {
+                PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
+                cell.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
+                pdfTable.AddCell(cell);
+            }
+
+            
+            foreach (DataGridViewRow row in dataGridView2.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    try
+                    {
+                        pdfTable.AddCell(cell.Value.ToString());
+                    }
+                    catch { }
+                }
+            }
+
+            pdfTable.SpacingAfter = 20;
+
+            PdfPTable pdfTable2 = new PdfPTable(dataGridView1.ColumnCount);
+            pdfTable2.DefaultCell.Padding = 3;
+            pdfTable2.HorizontalAlignment = Element.ALIGN_CENTER;
+            pdfTable2.DefaultCell.BorderWidth = 1;
+
+            //Adding Header row
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+
+                    PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
+                    cell.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
+                    pdfTable2.AddCell(cell);
+            }
+
+            
+
+            //Adding DataRow
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    try
+                    {
+                       pdfTable2.AddCell(cell.Value.ToString()); 
+                    }
+                    catch { }
+                }
+            }
+
+            PdfPCell pcell2 = new PdfPCell();
+            pcell2.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
+            pcell2.AddElement(new Phrase(price.ToString()));
+
+            //Exporting to PDF
+            string folderPath = @"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Bills\";
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            using (FileStream stream = new FileStream(folderPath + "DataGridViewExport4.pdf", FileMode.Create))
+            {
+                Document pdfDoc = new Document(PageSize.A4, 0f,0f,80f,0f);
+                PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+                pdfDoc.Add(pcell);
+                pdfDoc.Add(pdfTable);
+                pdfDoc.Add(pdfTable2);
+                pdfDoc.Add(pcell2);
+                pdfDoc.Close();
+                stream.Close();
+            }
+
+
+
             this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private bool mouseDown;
+        private Point lastLocation;
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+            }
+        }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
         }
     }
 }

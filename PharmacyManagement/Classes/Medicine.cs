@@ -159,7 +159,7 @@ namespace PharmacyManagement
                 using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
                 {
                     conn.Open();
-                    string query = String.Format("SELECT Name,Stock,Price FROM medicines_{0} where Name like @Name", globalID);  
+                    string query = String.Format("SELECT Name,Stock,Price FROM medicines_{0} where Name like @Name and Price != '###'", globalID);  
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         cmd.Parameters.Add(new SQLiteParameter("@Name","%" + name + "%"));

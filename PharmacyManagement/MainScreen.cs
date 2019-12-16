@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,8 +60,6 @@ namespace PharmacyManagement
             InitializeComponent();
             globalID = username;
             label76.Text = String.Format("Welcome to your pharmacy, {0}!", globalID);
-            textBox13.BackColor = System.Drawing.Color.FromArgb(30, 93, 185);
-
         }
 
         public MainScreen(string empUsername,string pharmacyName)
@@ -72,7 +71,6 @@ namespace PharmacyManagement
             tabControl1.TabPages[1].Enabled = false;
             tabControl1.TabPages[4].Enabled = false;
             tabControl1.TabPages[5].Enabled = false;
-
             label76.Text = String.Format("Welcome to your pharmacy, {0}!", employeeName);
         }
 
@@ -140,6 +138,10 @@ namespace PharmacyManagement
             textBox6.Text = globalID;
             textBox6.ReadOnly = true;
 
+            textBox13.BackColor = System.Drawing.Color.FromArgb(30, 93, 185);
+            textBox20.BackColor = System.Drawing.Color.FromArgb(30, 93, 185);
+            textBox22.BackColor = System.Drawing.Color.FromArgb(30, 93, 185);
+            textBox25.BackColor = System.Drawing.Color.FromArgb(30, 93, 185);
         }
 
         private void logoutBtn_Click(object sender, EventArgs e)
@@ -659,7 +661,7 @@ namespace PharmacyManagement
                     pictureBox1.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
                 
-                pictureBox1.Location = new Point(rect.X + 470, rect.Y + 104);
+                pictureBox1.Location = new Point(rect.X + 471, rect.Y + 104);
                 pictureBox1.Width = 200;
                 pictureBox1.Height = 200;
                 pictureBox1.Show();
@@ -683,7 +685,7 @@ namespace PharmacyManagement
                     Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(),employeeName,globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
-                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                     c.ShowDialog();
 
                     dt3.Rows.Clear();
@@ -693,7 +695,7 @@ namespace PharmacyManagement
                     Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(), globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
-                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                     c.ShowDialog();
 
                     dt3.Rows.Clear();
@@ -778,7 +780,7 @@ namespace PharmacyManagement
                     PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(),employeeName,globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
-                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                     c.ShowDialog();
 
                     dt4.Rows.Clear();
@@ -788,7 +790,7 @@ namespace PharmacyManagement
                     PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(), globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
-                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                     c.ShowDialog();
 
                     dt4.Rows.Clear();
@@ -811,7 +813,7 @@ namespace PharmacyManagement
                     pictureBox4.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
 
-                pictureBox4.Location = new Point(rect.X + 470, rect.Y + 104);
+                pictureBox4.Location = new Point(rect.X + 471, rect.Y + 104);
                 pictureBox4.Width = 200;
                 pictureBox4.Height = 200;
                 pictureBox4.Show();
@@ -1027,7 +1029,7 @@ namespace PharmacyManagement
             {
                 BuyPharmacyCheckout c = new BuyPharmacyCheckout(dt7,dataGridView2.Rows[index7].Cells[0].Value.ToString(),globalID);
                 c.StartPosition = FormStartPosition.Manual;
-                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                 c.ShowDialog();
 
                 dt7.Rows.Clear();
@@ -1048,7 +1050,7 @@ namespace PharmacyManagement
                     pictureBox2.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
 
-                pictureBox2.Location = new Point(rect.X + 470, rect.Y + 104);
+                pictureBox2.Location = new Point(rect.X + 471, rect.Y + 104);
                 pictureBox2.Width = 200;
                 pictureBox2.Height = 200;
                 pictureBox2.Show();
@@ -1320,7 +1322,7 @@ namespace PharmacyManagement
             {
                 BuyFactoryCheckout c = new BuyFactoryCheckout(dt13, dataGridView12.Rows[index9].Cells[0].Value.ToString(), globalID);
                 c.StartPosition = FormStartPosition.Manual;
-                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                 c.ShowDialog();
 
                 dt13.Rows.Clear();
@@ -1341,7 +1343,7 @@ namespace PharmacyManagement
                     pictureBox6.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
 
-                pictureBox6.Location = new Point(rect.X + 470, rect.Y + 104);
+                pictureBox6.Location = new Point(rect.X + 471, rect.Y + 104);
                 pictureBox6.Width = 200;
                 pictureBox6.Height = 200;
                 pictureBox6.Show();
@@ -1688,7 +1690,7 @@ namespace PharmacyManagement
         private void button29_Click(object sender, EventArgs e)
         {
             bs.StartPosition = FormStartPosition.Manual;
-            bs.Location = new Point(this.Location.X+820, this.Location.Y + 175);
+            bs.Location = new Point(this.Location.X+1070, this.Location.Y + 225);
             var result = bs.ShowDialog();
             if(result == DialogResult.OK)
     {
@@ -1764,5 +1766,6 @@ namespace PharmacyManagement
         {
             mouseDown = false;
         }
+
     }
 }

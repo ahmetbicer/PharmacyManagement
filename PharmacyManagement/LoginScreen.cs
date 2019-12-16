@@ -105,5 +105,13 @@ namespace PharmacyManagement
         {
             textBox4.Clear();
         }
+
+        private void textBox4_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button2_Click(this, new EventArgs());
+            }
+        }
     }
 }

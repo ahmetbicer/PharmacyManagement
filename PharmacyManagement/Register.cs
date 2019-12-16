@@ -51,6 +51,16 @@ namespace PharmacyManagement
                 button3_Click(this, new EventArgs());
             }
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
     }
 
     }
