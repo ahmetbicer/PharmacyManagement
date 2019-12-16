@@ -30,19 +30,7 @@ namespace PharmacyManagement
         DataTable dt7 = new DataTable();
         DataTable dt13 = new DataTable();
 
-        int index;
-        int index2;
-        int index3;
-        int index4;
-        int index5;
-        int index6;
-        int index7;
-        int index8;
-        int index9;
-        int index10;
-        int index11;
-
-        int[] indexes = new int[12];
+        int[] index = new int[12];
 
         string globalID;
         string employeeName;
@@ -76,6 +64,7 @@ namespace PharmacyManagement
             tabControl1_SelectedIndexChanged(sender, e);
             tabControl4_SelectedIndexChanged(sender, e);
             tabControl5_SelectedIndexChanged(sender, e);
+
             dt3.Columns.Add("Name");
             dt3.Columns.Add("Stock");
             dt3.Columns.Add("Quantity");
@@ -322,13 +311,14 @@ namespace PharmacyManagement
 
         private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index2 = e.RowIndex;
+            // index2 = e.RowIndex;
+            index[2] = e.RowIndex;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
 
-            DataGridViewRow selectedRow = dataGridView3.Rows[index];
+            DataGridViewRow selectedRow = dataGridView3.Rows[index[0]];
             string medName = selectedRow.Cells[0].Value.ToString();
             int id = selectedRow.Index + 1;
             m.DeleteMedicine(medName, id, globalID);
@@ -349,7 +339,7 @@ namespace PharmacyManagement
 
         private void button6_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectedRow = dataGridView3.Rows[index];
+            DataGridViewRow selectedRow = dataGridView3.Rows[index[0]];
             pictureBox5.Image = Image.FromFile(m.GetImagePath(selectedRow.Cells[0].Value.ToString(), globalID));
             textBox4.Text = selectedRow.Cells[0].Value.ToString();
             textBox16.Text = selectedRow.Cells[1].Value.ToString();
@@ -364,8 +354,8 @@ namespace PharmacyManagement
         private void button7_Click(object sender, EventArgs e)
         {
 
-            DataGridViewRow selectedRow = dataGridView3.Rows[index];
-            int indexInt = index + 1;
+            DataGridViewRow selectedRow = dataGridView3.Rows[index[0]];
+            int indexInt = index[0] + 1;
             if (imgpath2 == "")
             {
                 m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, textBox2.Text, globalID);
@@ -408,7 +398,7 @@ namespace PharmacyManagement
 
         private void button8_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
+            DataGridViewRow selectedRow = dataGridView4.Rows[index[2]];
             string patID = selectedRow.Cells[1].Value.ToString();
             string patName = selectedRow.Cells[2].Value.ToString();
             string patSurname = selectedRow.Cells[3].Value.ToString();
@@ -429,7 +419,7 @@ namespace PharmacyManagement
 
         private void button11_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
+            DataGridViewRow selectedRow = dataGridView4.Rows[index[2]];
             string patPatId = selectedRow.Cells[0].Value.ToString();
             string patID = textBox7.Text;
             string patName = textBox8.Text;
@@ -459,7 +449,7 @@ namespace PharmacyManagement
 
         private void button10_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectedRow = dataGridView4.Rows[index2];
+            DataGridViewRow selectedRow = dataGridView4.Rows[index[2]];
             string patPatId = selectedRow.Cells[0].Value.ToString();
             p.deletePatient(patPatId, globalID);
             if (isEmployee)
@@ -475,7 +465,7 @@ namespace PharmacyManagement
 
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index = e.RowIndex;
+            index[0] = e.RowIndex;
         }
 
         private void textBox13_TextChanged(object sender, EventArgs e)
@@ -671,7 +661,7 @@ namespace PharmacyManagement
             {
                 if (isEmployee)
                 {
-                    Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(), employeeName, globalID);
+                    Checkout c = new Checkout(dt3, dataGridView9.Rows[index[4]].Cells[0].Value.ToString(), employeeName, globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
                     c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
@@ -681,7 +671,7 @@ namespace PharmacyManagement
                 }
                 else
                 {
-                    Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(), globalID);
+                    Checkout c = new Checkout(dt3, dataGridView9.Rows[index[4]].Cells[0].Value.ToString(), globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
                     c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
@@ -694,20 +684,20 @@ namespace PharmacyManagement
 
         private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index3 = e.RowIndex;//
+            index[3] = e.RowIndex;//
         }
 
         private void button16_Click(object sender, EventArgs e)
         {
-            if (index3 > -1 && dt3.Rows.Count != 0)//
+            if (index[3] > -1 && dt3.Rows.Count != 0)//
             {
-                dt3.Rows[index3].Delete();
+                dt3.Rows[index[3]].Delete();
             }
         }
 
         private void dataGridView9_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index4 = e.RowIndex;//
+            index[4] = e.RowIndex;//
         }
 
         private void button17_Click(object sender, EventArgs e)
@@ -743,19 +733,19 @@ namespace PharmacyManagement
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index5 = e.RowIndex;
+            index[5] = e.RowIndex;
         }
 
         private void dataGridView8_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index6 = e.RowIndex;
+            index[6] = e.RowIndex;
         }
 
         private void button19_Click(object sender, EventArgs e)
         {
-            if (index6 > -1 && dt4.Rows.Count != 0)
+            if (index[6] > -1 && dt4.Rows.Count != 0)
             {
-                dt4.Rows[index6].Delete();
+                dt4.Rows[index[6]].Delete();
             }
         }
 
@@ -765,7 +755,7 @@ namespace PharmacyManagement
             {
                 if (isEmployee)
                 {
-                    PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(), employeeName, globalID);
+                    PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index[5]].Cells[0].Value.ToString(), employeeName, globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
                     c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
@@ -775,7 +765,7 @@ namespace PharmacyManagement
                 }
                 else
                 {
-                    PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(), globalID);
+                    PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index[5]].Cells[0].Value.ToString(), globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
                     c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
@@ -989,20 +979,20 @@ namespace PharmacyManagement
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index7 = e.RowIndex;
+            index[7] = e.RowIndex;
             changePharmacyMed();
         }
 
         private void dataGridView7_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index8 = e.RowIndex;
+            index[8] = e.RowIndex;
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            if (index8 > -1 && dt7.Rows.Count != 0)
+            if (index[8] > -1 && dt7.Rows.Count != 0)
             {
-                dt7.Rows[index8].Delete();
+                dt7.Rows[index[8]].Delete();
             }
         }
 
@@ -1010,7 +1000,7 @@ namespace PharmacyManagement
         {
             if (dataGridView7.Rows.Count != 0)
             {
-                BuyPharmacyCheckout c = new BuyPharmacyCheckout(dt7, dataGridView2.Rows[index7].Cells[0].Value.ToString(), globalID);
+                BuyPharmacyCheckout c = new BuyPharmacyCheckout(dt7, dataGridView2.Rows[index[7]].Cells[0].Value.ToString(), globalID);
                 c.StartPosition = FormStartPosition.Manual;
                 c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                 c.ShowDialog();
@@ -1026,7 +1016,7 @@ namespace PharmacyManagement
                 Rectangle rect = dataGridView11.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
                 try
                 {
-                    pictureBox2.Image = Image.FromFile(m.GetImagePath(dataGridView11.Rows[e.RowIndex].Cells[1].Value.ToString(), dataGridView2.Rows[index7].Cells[0].Value.ToString()));
+                    pictureBox2.Image = Image.FromFile(m.GetImagePath(dataGridView11.Rows[e.RowIndex].Cells[1].Value.ToString(), dataGridView2.Rows[index[7]].Cells[0].Value.ToString()));
                 }
                 catch (System.IO.FileNotFoundException)
                 {
@@ -1111,7 +1101,7 @@ namespace PharmacyManagement
             DataTable dt5 = ph.cartPharmacy(globalID);
             dataGridView2.DataSource = dt5;
 
-            DataTable dt = m.CartMedicine(dataGridView2.Rows[index7].Cells[0].Value.ToString());
+            DataTable dt = m.CartMedicine(dataGridView2.Rows[index[7]].Cells[0].Value.ToString());
             dataGridView11.Columns.Clear();
 
             DataGridViewImageColumn col5 = new DataGridViewImageColumn();
@@ -1158,9 +1148,9 @@ namespace PharmacyManagement
 
         private void changePharmacyMed()
         {
-            if (index7 > -1)
+            if (index[7] > -1)
             {
-                DataTable dt = m.CartMedicine(dataGridView2.Rows[index7].Cells[0].Value.ToString());
+                DataTable dt = m.CartMedicine(dataGridView2.Rows[index[7]].Cells[0].Value.ToString());
                 //DataTable dt = m.CartMedicine(globalID);
                 dataGridView11.Columns.Clear();
 
@@ -1213,7 +1203,7 @@ namespace PharmacyManagement
                 buy_from_pharmacy();
             }
 
-            DataTable dt = m.SearchMedicine(textBox22.Text, dataGridView2.Rows[index7].Cells[0].Value.ToString());
+            DataTable dt = m.SearchMedicine(textBox22.Text, dataGridView2.Rows[index[7]].Cells[0].Value.ToString());
             dataGridView11.Columns.Clear();
 
             DataGridViewImageColumn col5 = new DataGridViewImageColumn();
@@ -1272,20 +1262,20 @@ namespace PharmacyManagement
 
         private void dataGridView12_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index9 = e.RowIndex;
+            index[9] = e.RowIndex;
             changeFactoryMed();
         }
 
         private void dataGridView13_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index10 = e.RowIndex;
+            index[10] = e.RowIndex;
         }
 
         private void button18_Click(object sender, EventArgs e)
         {
-            if (index10 > -1 && dt13.Rows.Count != 0)
+            if (index[10] > -1 && dt13.Rows.Count != 0)
             {
-                dt13.Rows[index10].Delete();
+                dt13.Rows[index[10]].Delete();
             }
         }
 
@@ -1293,7 +1283,7 @@ namespace PharmacyManagement
         {
             if (dataGridView13.Rows.Count != 0)
             {
-                BuyFactoryCheckout c = new BuyFactoryCheckout(dt13, dataGridView12.Rows[index9].Cells[0].Value.ToString(), globalID);
+                BuyFactoryCheckout c = new BuyFactoryCheckout(dt13, dataGridView12.Rows[index[9]].Cells[0].Value.ToString(), globalID);
                 c.StartPosition = FormStartPosition.Manual;
                 c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                 c.ShowDialog();
@@ -1309,7 +1299,7 @@ namespace PharmacyManagement
                 Rectangle rect = dataGridView14.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
                 try
                 {
-                    pictureBox6.Image = Image.FromFile(m.GetFactoryImagePath(dataGridView14.Rows[e.RowIndex].Cells[1].Value.ToString(), dataGridView12.Rows[index9].Cells[0].Value.ToString()));
+                    pictureBox6.Image = Image.FromFile(m.GetFactoryImagePath(dataGridView14.Rows[e.RowIndex].Cells[1].Value.ToString(), dataGridView12.Rows[index[9]].Cells[0].Value.ToString()));
                 }
                 catch (System.IO.FileNotFoundException)
                 {
@@ -1394,7 +1384,7 @@ namespace PharmacyManagement
             DataTable dt5 = mf.cartFactory();
             dataGridView12.DataSource = dt5;
 
-            DataTable dt = m.CartFactory(dataGridView12.Rows[index9].Cells[0].Value.ToString());
+            DataTable dt = m.CartFactory(dataGridView12.Rows[index[9]].Cells[0].Value.ToString());
             dataGridView14.Columns.Clear();
 
             DataGridViewImageColumn col5 = new DataGridViewImageColumn();
@@ -1440,9 +1430,9 @@ namespace PharmacyManagement
 
         private void changeFactoryMed()
         {
-            if (index9 > -1)
+            if (index[9] > -1)
             {
-                DataTable dt = m.CartFactory(dataGridView12.Rows[index9].Cells[0].Value.ToString());
+                DataTable dt = m.CartFactory(dataGridView12.Rows[index[9]].Cells[0].Value.ToString());
                 dataGridView14.Columns.Clear();
 
                 DataGridViewImageColumn col5 = new DataGridViewImageColumn();
@@ -1496,7 +1486,7 @@ namespace PharmacyManagement
             }
 
             //DataTable dt = m.SearchMedicine(textBox25.Text, globalID);
-            DataTable dt = m.SearchFactoryMedicine(textBox25.Text, dataGridView12.Rows[index9].Cells[0].Value.ToString());
+            DataTable dt = m.SearchFactoryMedicine(textBox25.Text, dataGridView12.Rows[index[9]].Cells[0].Value.ToString());
             dataGridView14.Columns.Clear();
 
             DataGridViewImageColumn col5 = new DataGridViewImageColumn();
@@ -1565,12 +1555,12 @@ namespace PharmacyManagement
 
         private void dataGridView15_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            index11 = e.RowIndex;
+            index[11] = e.RowIndex;
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectedRow = dataGridView15.Rows[index11];
+            DataGridViewRow selectedRow = dataGridView15.Rows[index[11]];
             textBox29.Text = selectedRow.Cells[0].Value.ToString();
             textBox32.Text = selectedRow.Cells[1].Value.ToString();
             textBox33.Text = selectedRow.Cells[2].Value.ToString();
@@ -1597,7 +1587,7 @@ namespace PharmacyManagement
 
         private void button20_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectedRow = dataGridView15.Rows[index11];
+            DataGridViewRow selectedRow = dataGridView15.Rows[index[11]];
             string EmployeeID = selectedRow.Cells[0].Value.ToString();
             emp.deleteEmployee(EmployeeID);
             tabControl6.SelectedIndex = 1;
