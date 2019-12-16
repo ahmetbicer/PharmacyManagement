@@ -13,7 +13,7 @@ namespace PharmacyManagement
     {
         public void addPatient(string ID, string pat_name,string pat_surname,string pat_age,string pat_city,string pat_report,string globalID)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = "insert into patients (ID,Name,Surname,Age,City,HaveReport) values(@ID,@Name,@Surname,@Age,@City,@HaveReport) ";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@ID", ID));
@@ -29,7 +29,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select * from patients";
@@ -53,7 +53,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select ID,Name,Surname from patients";
@@ -75,7 +75,7 @@ namespace PharmacyManagement
 
         public void deletePatient(string patPatId, string globalID)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = "delete from patients where PatId = @PatId";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@PatId",patPatId));
@@ -85,7 +85,7 @@ namespace PharmacyManagement
 
         public void updatePatient(string patPatId, string patID, string patName, string patSurname, string patAge, string patCity, string patHaveReport, string globalID)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = "update patients set ID = @ID, Name = @Name, Surname = @Surname, Age = @Age, City = @City, HaveReport = @HaveReport where PatId = @PatId";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@PatId", patPatId));
@@ -103,7 +103,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "SELECT ID,Name,Surname FROM patients where ID like @ID";
@@ -129,7 +129,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = String.Format("select ID,Name,Surname,Age,City from patients where ID = {0}", id);

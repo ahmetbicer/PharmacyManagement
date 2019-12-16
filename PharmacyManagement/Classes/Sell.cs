@@ -11,7 +11,7 @@ namespace PharmacyManagement
     {
         public void SellMedicine(string name,int stock,int quantity, string globalID)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = String.Format("update medicines_{0} set Stock = Stock - @quantity where Name= @Name", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", name));

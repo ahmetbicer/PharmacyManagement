@@ -14,7 +14,7 @@ namespace PharmacyManagement
         public void BuyMedicine(string name, int stock, int quantity, string globalID)
         {
             int c1 = CheckMedCount(globalID);
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = String.Format("insert into medicines_{0}(Name,Stock) Values(@Name,@quantity) on CONFLICT(Name) do update set Stock = Stock + @quantity",globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Name", name));
@@ -32,7 +32,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = String.Format("select count(*) from medicines_{0}", globalID);
@@ -55,7 +55,7 @@ namespace PharmacyManagement
 
         public void InsertUsageInfo(string globalID)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = String.Format("insert into medicines_{0}_usage(Dose,Definition,Ingredients,Report) Values('###','###','###','###')", globalID);
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             con.Open();

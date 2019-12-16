@@ -11,9 +11,10 @@ namespace PharmacyManagement
 {
     public class Logs
     {
+        
         public void AddLogs(string log, string user)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = String.Format("insert into logs_{0} (Logs) values(@Log);",user);         
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Log", log));
@@ -25,7 +26,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = String.Format("select Logs from logs_{0} ORDER by LogsId DESC", user);

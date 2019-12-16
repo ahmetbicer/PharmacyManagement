@@ -61,7 +61,7 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Neutrif Pro", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(444, 242);
+            this.label1.Location = new System.Drawing.Point(445, 243);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(279, 32);
             this.label1.TabIndex = 11;
@@ -122,10 +122,12 @@
             // approval
             // 
             this.approval.AutoSize = true;
+            this.approval.BackColor = System.Drawing.Color.Transparent;
+            this.approval.Font = new System.Drawing.Font("Neutrif Pro Medium", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.approval.ForeColor = System.Drawing.Color.LimeGreen;
-            this.approval.Location = new System.Drawing.Point(439, 261);
+            this.approval.Location = new System.Drawing.Point(480, 496);
             this.approval.Name = "approval";
-            this.approval.Size = new System.Drawing.Size(0, 17);
+            this.approval.Size = new System.Drawing.Size(0, 19);
             this.approval.TabIndex = 17;
             // 
             // button4

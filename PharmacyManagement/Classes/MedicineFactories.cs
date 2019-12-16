@@ -15,7 +15,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select FactoryName from MedicineFactories";
@@ -39,7 +39,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select FactoryName from MedicineFactories where FactoryName like @FactoryName";
@@ -65,7 +65,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = String.Format("select FactoryName from MedicineFactories where FactoryName = '{0}'", FactoryName);

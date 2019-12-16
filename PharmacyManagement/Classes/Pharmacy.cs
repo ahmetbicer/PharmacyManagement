@@ -13,7 +13,7 @@ namespace PharmacyManagement
     {
         public void AddPharmacy(string username,string email,string password)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query1 = String.Format("insert into pharmacyList (Username,Email,Password) values(@Username,@Email,@Password);");
             string query2 = String.Format("CREATE TABLE medicines_{0}('MedId' INTEGER,'Name'  TEXT UNIQUE, 'Stock' TEXT,'Price'    TEXT DEFAULT '###','ImgPath'    TEXT,'Quantity'	TEXT DEFAULT 1,PRIMARY KEY('MedId'));", username);
             string query3 = String.Format("CREATE TABLE medicines_{0}_usage('MedId' INTEGER,'Dose'  TEXT, 'Definition' TEXT,'Ingredients'    TEXT,'Report' TEXT,PRIMARY KEY('MedId'));", username);
@@ -30,7 +30,7 @@ namespace PharmacyManagement
 
         public void DeletePharmacy(string username)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query1 = String.Format("delete from pharmacyList where Username = @Username;");
             string query2 = String.Format("delete from employeeList where PharmacyName = @Username;");
             string query3 = String.Format("drop table medicines_{0};",username);
@@ -47,7 +47,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     using (var cmd = new SQLiteCommand("SELECT Username,Password FROM pharmacyList WHERE Username=@Username AND Password = @Password", conn))
@@ -90,7 +90,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select Username from pharmacyList where Username != @Username";
@@ -115,7 +115,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select Username from pharmacyList where Username like @Username";
@@ -141,7 +141,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = String.Format("select Username from pharmacyList where Username = '{0}'", username);
@@ -165,7 +165,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select Email,Password from pharmacyList where Username = @Username";
@@ -188,7 +188,7 @@ namespace PharmacyManagement
 
         public void updatePharmacy(string email,string password,string username)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = "update pharmacyList set Email = @Email, Password = @Password where Username = @Username";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@Email", email));

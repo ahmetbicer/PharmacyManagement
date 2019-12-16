@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AForge;
+using AForge.Video;
+using AForge.Video.DirectShow;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,9 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AForge;
-using AForge.Video;
-using AForge.Video.DirectShow;
 using ZXing;
 using ZXing.QrCode;
 
@@ -17,10 +17,8 @@ namespace PharmacyManagement
 {
     public partial class BarcodeScanner : Form
     {
-
         FilterInfoCollection CaptureDevice;
         VideoCaptureDevice FinalFrame;
-
         public string decodedstr { get; set; }
 
         public BarcodeScanner()
@@ -41,11 +39,11 @@ namespace PharmacyManagement
 
                 if (decoded != "")
                 {
-                    barcodeCam.Image = null;
                     this.decodedstr = decoded;
                     this.DialogResult = DialogResult.OK;
                     FinalFrame.Stop();
                     timer1.Stop();
+                    barcodeCam.Image = null;
                     this.Close();
 
 
@@ -73,6 +71,7 @@ namespace PharmacyManagement
         {
             FinalFrame.Stop();
             timer1.Stop();
+            barcodeCam.Image = null;
             this.Close();
         }
 
@@ -82,6 +81,7 @@ namespace PharmacyManagement
         }
 
         private bool mouseDown;
+
         private System.Drawing.Point lastLocation;
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)

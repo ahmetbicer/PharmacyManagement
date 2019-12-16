@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace PharmacyManagement
 {
     public partial class MainScreen : Form
@@ -21,8 +20,8 @@ namespace PharmacyManagement
         MedicineFactories mf = new MedicineFactories();
         Employee emp = new Employee();
         Logs l = new Logs();
-        BarcodeScanner bs = new BarcodeScanner();
 
+        BarcodeScanner bs = new BarcodeScanner();
         OpenFileDialog open = new OpenFileDialog();
         OpenFileDialog open1 = new OpenFileDialog();
 
@@ -43,12 +42,10 @@ namespace PharmacyManagement
         int index10;
         int index11;
 
+        int[] indexes = new int[12];
+
         string globalID;
         string employeeName;
-        int sellIndex;
-        int sellIndex2;
-        int sellIndex3;
-        int sellIndex4;
 
         string imgpath = "";
         string imgpath2 = "";
@@ -62,7 +59,7 @@ namespace PharmacyManagement
             label76.Text = String.Format("Welcome to your pharmacy, {0}!", globalID);
         }
 
-        public MainScreen(string empUsername,string pharmacyName)
+        public MainScreen(string empUsername, string pharmacyName)
         {
             InitializeComponent();
             employeeName = empUsername;
@@ -154,7 +151,6 @@ namespace PharmacyManagement
             l.Show();
         }
 
-
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == tabControl1.TabPages[0])
@@ -225,7 +221,7 @@ namespace PharmacyManagement
 
         private void tabControl6_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(tabControl6.SelectedTab == tabControl6.TabPages[0])
+            if (tabControl6.SelectedTab == tabControl6.TabPages[0])
             {
                 viewEmployees();
             }
@@ -245,19 +241,17 @@ namespace PharmacyManagement
                 updatePharmacy();
             }
         }
-        
-
 
         private void button1_Click(object sender, EventArgs e)
         {
-                open.RestoreDirectory = false;
-                open.ShowHelp = true;
-                open.Filter = "Image Files(*.jpg; *.png; *.jpeg; *.gif; *.bmp)|*.jpg; *.png; *.jpeg; *.gif; *.bmp";
-                if (open.ShowDialog() == DialogResult.OK)
-                {
-                    pictureBox3.Image = new Bitmap(open.FileName);
-                    imgpath = open.FileName;
-                }
+            open.RestoreDirectory = false;
+            open.ShowHelp = true;
+            open.Filter = "Image Files(*.jpg; *.png; *.jpeg; *.gif; *.bmp)|*.jpg; *.png; *.jpeg; *.gif; *.bmp";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox3.Image = new Bitmap(open.FileName);
+                imgpath = open.FileName;
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -272,10 +266,9 @@ namespace PharmacyManagement
             }
         }
 
-
         private void button3_Click(object sender, EventArgs e)
         {
-            m.AddMedicine(name.Text, stock.Text, price.Text,dose.Text,report.Text,definition.Text,ingredients.Text, imgpath, globalID);
+            m.AddMedicine(name.Text, stock.Text, price.Text, dose.Text, report.Text, definition.Text, ingredients.Text, imgpath, globalID);
             if (isEmployee)
             {
                 l.AddLogs(String.Format("{0}  -  '{1}' added the medicine '{2}'", DateTime.Now.ToString(), employeeName, name.Text), globalID);
@@ -327,7 +320,6 @@ namespace PharmacyManagement
             pat_approval.Text = "Added Successfully";
         }
 
-
         private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             index2 = e.RowIndex;
@@ -339,7 +331,7 @@ namespace PharmacyManagement
             DataGridViewRow selectedRow = dataGridView3.Rows[index];
             string medName = selectedRow.Cells[0].Value.ToString();
             int id = selectedRow.Index + 1;
-            m.DeleteMedicine(medName,id, globalID);
+            m.DeleteMedicine(medName, id, globalID);
 
             if (isEmployee)
             {
@@ -358,7 +350,7 @@ namespace PharmacyManagement
         private void button6_Click(object sender, EventArgs e)
         {
             DataGridViewRow selectedRow = dataGridView3.Rows[index];
-            pictureBox5.Image = Image.FromFile(m.GetImagePath(selectedRow.Cells[0].Value.ToString(),globalID));
+            pictureBox5.Image = Image.FromFile(m.GetImagePath(selectedRow.Cells[0].Value.ToString(), globalID));
             textBox4.Text = selectedRow.Cells[0].Value.ToString();
             textBox16.Text = selectedRow.Cells[1].Value.ToString();
             textBox3.Text = selectedRow.Cells[2].Value.ToString();
@@ -374,7 +366,7 @@ namespace PharmacyManagement
 
             DataGridViewRow selectedRow = dataGridView3.Rows[index];
             int indexInt = index + 1;
-            if(imgpath2 == "")
+            if (imgpath2 == "")
             {
                 m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, textBox2.Text, globalID);
             }
@@ -403,7 +395,6 @@ namespace PharmacyManagement
             pictureBox5.Image = null;
             imgpath2 = "";
             label17.Text = "Updated Successfully";
-
         }
 
         private void viewMedicines()
@@ -589,8 +580,6 @@ namespace PharmacyManagement
 
         private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            sellIndex = e.RowIndex;//
-
             if (e.ColumnIndex == 7 && e.RowIndex > -1)
             {
 
@@ -654,13 +643,13 @@ namespace PharmacyManagement
                 Rectangle rect = dataGridView5.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
                 try
                 {
-                    pictureBox1.Image = Image.FromFile(m.GetImagePath(dataGridView5.Rows[e.RowIndex].Cells[1].Value.ToString(),globalID));
+                    pictureBox1.Image = Image.FromFile(m.GetImagePath(dataGridView5.Rows[e.RowIndex].Cells[1].Value.ToString(), globalID));
                 }
-                catch(System.IO.FileNotFoundException)
+                catch (System.IO.FileNotFoundException)
                 {
                     pictureBox1.Image = Image.FromFile(@"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png");
                 }
-                
+
                 pictureBox1.Location = new Point(rect.X + 471, rect.Y + 104);
                 pictureBox1.Width = 200;
                 pictureBox1.Height = 200;
@@ -682,12 +671,12 @@ namespace PharmacyManagement
             {
                 if (isEmployee)
                 {
-                    Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(),employeeName,globalID);
+                    Checkout c = new Checkout(dt3, dataGridView9.Rows[index4].Cells[0].Value.ToString(), employeeName, globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
                     c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                     c.ShowDialog();
-
+                    sell_to_patient();
                     dt3.Rows.Clear();
                 }
                 else
@@ -697,7 +686,7 @@ namespace PharmacyManagement
                     c.StartPosition = FormStartPosition.Manual;
                     c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                     c.ShowDialog();
-
+                    sell_to_patient();
                     dt3.Rows.Clear();
                 }
             }
@@ -739,7 +728,6 @@ namespace PharmacyManagement
             dataGridView9.DataSource = dt;
         }
 
-
         //sell to pharmacy
         private void textBox18_TextChanged(object sender, EventArgs e)
         {
@@ -777,12 +765,12 @@ namespace PharmacyManagement
             {
                 if (isEmployee)
                 {
-                    PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(),employeeName,globalID);
+                    PharmacyCheckout c = new PharmacyCheckout(dt4, dataGridView1.Rows[index5].Cells[0].Value.ToString(), employeeName, globalID);
 
                     c.StartPosition = FormStartPosition.Manual;
                     c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                     c.ShowDialog();
-
+                    sell_to_pharmacy();
                     dt4.Rows.Clear();
                 }
                 else
@@ -792,10 +780,10 @@ namespace PharmacyManagement
                     c.StartPosition = FormStartPosition.Manual;
                     c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                     c.ShowDialog();
-
+                    sell_to_pharmacy();
                     dt4.Rows.Clear();
                 }
-               
+
             }
         }
 
@@ -826,12 +814,10 @@ namespace PharmacyManagement
             {
                 pictureBox4.Hide();
             }
-        }//
+        }
 
         private void dataGridView10_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            sellIndex2 = e.RowIndex;
-
             if (e.ColumnIndex == 7 && e.RowIndex > -1)
             {
 
@@ -886,7 +872,7 @@ namespace PharmacyManagement
                     }
                 }
             }
-        }//
+        }
 
         public void sell_to_pharmacy()
         {
@@ -988,10 +974,7 @@ namespace PharmacyManagement
             }
         }
 
-
         //buy from pharmacy
-
-
         private void textBox14_TextChanged(object sender, EventArgs e)
         {
             if (textBox14.Text == "")
@@ -1027,11 +1010,11 @@ namespace PharmacyManagement
         {
             if (dataGridView7.Rows.Count != 0)
             {
-                BuyPharmacyCheckout c = new BuyPharmacyCheckout(dt7,dataGridView2.Rows[index7].Cells[0].Value.ToString(),globalID);
+                BuyPharmacyCheckout c = new BuyPharmacyCheckout(dt7, dataGridView2.Rows[index7].Cells[0].Value.ToString(), globalID);
                 c.StartPosition = FormStartPosition.Manual;
                 c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                 c.ShowDialog();
-
+                buy_from_pharmacy();
                 dt7.Rows.Clear();
             }
         }
@@ -1057,7 +1040,6 @@ namespace PharmacyManagement
             }
         }
 
-
         private void dataGridView11_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0 && e.RowIndex > -1)
@@ -1068,8 +1050,6 @@ namespace PharmacyManagement
 
         private void dataGridView11_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            sellIndex3 = e.RowIndex;
-
             if (e.ColumnIndex == 7 && e.RowIndex > -1)
             {
 
@@ -1140,8 +1120,8 @@ namespace PharmacyManagement
             col5.Image = Properties.Resources.image;
             dataGridView11.Columns.Add(col5);
             dataGridView11.DataSource = dt;
-            
-            
+
+
             DataGridViewButtonColumn col1 = new DataGridViewButtonColumn();
             col1.HeaderText = "-";
             col1.Text = "-";
@@ -1174,15 +1154,11 @@ namespace PharmacyManagement
                 dataGridView11.Rows[row.Index].Cells[5].Value = 0;
 
             }
-
-            //DataTable dt5 = ph.cartPharmacy(globalID);
-            //dataGridView2.DataSource = dt5;
-
         }
 
         private void changePharmacyMed()
         {
-            if(index7 > -1)
+            if (index7 > -1)
             {
                 DataTable dt = m.CartMedicine(dataGridView2.Rows[index7].Cells[0].Value.ToString());
                 //DataTable dt = m.CartMedicine(globalID);
@@ -1228,8 +1204,6 @@ namespace PharmacyManagement
 
                 }
             }
-           
-            
         }
 
         private void textBox22_TextChanged(object sender, EventArgs e)
@@ -1284,7 +1258,6 @@ namespace PharmacyManagement
         }
 
         //buy from medicine factories
-
         private void textBox23_TextChanged(object sender, EventArgs e)
         {
             if (textBox23.Text == "")
@@ -1324,7 +1297,7 @@ namespace PharmacyManagement
                 c.StartPosition = FormStartPosition.Manual;
                 c.Location = new Point(this.Location.X + 35, this.Location.Y + 65);
                 c.ShowDialog();
-
+                buy_from_medicine_factories();
                 dt13.Rows.Clear();
             }
         }
@@ -1360,8 +1333,6 @@ namespace PharmacyManagement
 
         private void dataGridView14_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            sellIndex4 = e.RowIndex;
-
             if (e.ColumnIndex == 7 && e.RowIndex > -1)
             {
 
@@ -1465,13 +1436,11 @@ namespace PharmacyManagement
                 dataGridView14.Rows[row.Index].Cells[5].Value = 0;
 
             }
-
-            
         }
 
         private void changeFactoryMed()
         {
-            if(index9 > -1)
+            if (index9 > -1)
             {
                 DataTable dt = m.CartFactory(dataGridView12.Rows[index9].Cells[0].Value.ToString());
                 dataGridView14.Columns.Clear();
@@ -1482,7 +1451,7 @@ namespace PharmacyManagement
                 col5.Image = Properties.Resources.image;
                 dataGridView14.Columns.Add(col5);
                 dataGridView14.DataSource = dt;
-            
+
                 DataGridViewButtonColumn col1 = new DataGridViewButtonColumn();
                 col1.HeaderText = "-";
                 col1.Text = "-";
@@ -1518,7 +1487,6 @@ namespace PharmacyManagement
 
             }
         }
-
 
         private void textBox25_TextChanged(object sender, EventArgs e)
         {
@@ -1573,7 +1541,6 @@ namespace PharmacyManagement
         }
 
         //employees
-
         private void button24_Click(object sender, EventArgs e)
         {
             emp.AddEmployee(textBox24.Text, textBox28.Text, textBox34.Text, textBox26.Text, textBox21.Text, textBox37.Text, textBox27.Text, globalID);
@@ -1638,7 +1605,6 @@ namespace PharmacyManagement
         }
 
         //settings
-
         private void button26_Click(object sender, EventArgs e)
         {
             ph.DeletePharmacy(globalID);
@@ -1690,10 +1656,10 @@ namespace PharmacyManagement
         private void button29_Click(object sender, EventArgs e)
         {
             bs.StartPosition = FormStartPosition.Manual;
-            bs.Location = new Point(this.Location.X+1070, this.Location.Y + 225);
+            bs.Location = new Point(this.Location.X + 1070, this.Location.Y + 225);
             var result = bs.ShowDialog();
-            if(result == DialogResult.OK)
-    {
+            if (result == DialogResult.OK)
+            {
                 string val = bs.decodedstr;
 
                 string[] tokens = val.Split(',');
@@ -1709,7 +1675,7 @@ namespace PharmacyManagement
         {
             DataTable dt16 = m.ReadPrescription(textBox15.Text, globalID);
             string patientid = m.PrescriptionPatient(textBox15.Text);
-            
+
             if (isEmployee)
             {
 
@@ -1744,7 +1710,9 @@ namespace PharmacyManagement
         }
 
         private bool mouseDown;
+
         private Point lastLocation;
+
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             mouseDown = true;
@@ -1766,6 +1734,5 @@ namespace PharmacyManagement
         {
             mouseDown = false;
         }
-
     }
 }

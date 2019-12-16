@@ -18,15 +18,14 @@ namespace PharmacyManagement
         string globalid;
         string id;
         string empName;
-
         bool isEmployee = false;
 
         DataTable dt1;
-
         Patient p = new Patient();
         Medicine m = new Medicine();
         Sell s = new Sell();
         Logs l = new Logs();
+
         public Checkout(DataTable dt, string patID, string globalID)
         {
             InitializeComponent();
@@ -46,12 +45,13 @@ namespace PharmacyManagement
         }
 
         float price = 0;
+
         private void Checkout_Load(object sender, EventArgs e)
         {
 
             DataTable dt2 = p.GetPatient(id, globalid);
             dataGridView2.DataSource = dt2;
-            
+
 
             dataGridView1.DataSource = dt1;
             DataGridViewButtonColumn col = new DataGridViewButtonColumn();
@@ -74,16 +74,15 @@ namespace PharmacyManagement
             label8.Text = "Push details button to see...";
             label10.Text = "Push details button to see...";
             label12.Text = "Push details button to see...";
-
-
         }
+
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
             if (e.ColumnIndex == 4 && e.RowIndex > -1)
             {
                 DataTable dt = m.GetUsageDetails(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString(), globalid);
-                
+
                 label8.Text = dt.Rows[0].Field<string>(0);
                 label10.Text = dt.Rows[0].Field<string>(2);
                 if (dt.Rows[0].Field<string>(3) == "0")
@@ -101,7 +100,7 @@ namespace PharmacyManagement
 
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach(DataGridViewRow row in dataGridView1.Rows)
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 s.SellMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
                 if (isEmployee)
@@ -130,7 +129,7 @@ namespace PharmacyManagement
                 pdfTable.AddCell(cell);
             }
 
-            
+
             foreach (DataGridViewRow row in dataGridView2.Rows)
             {
                 foreach (DataGridViewCell cell in row.Cells)
@@ -154,12 +153,12 @@ namespace PharmacyManagement
             foreach (DataGridViewColumn column in dataGridView1.Columns)
             {
 
-                    PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
-                    cell.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
-                    pdfTable2.AddCell(cell);
+                PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
+                cell.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
+                pdfTable2.AddCell(cell);
             }
 
-            
+
 
             //Adding DataRow
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -168,7 +167,7 @@ namespace PharmacyManagement
                 {
                     try
                     {
-                       pdfTable2.AddCell(cell.Value.ToString()); 
+                        pdfTable2.AddCell(cell.Value.ToString());
                     }
                     catch { }
                 }
@@ -186,7 +185,7 @@ namespace PharmacyManagement
             }
             using (FileStream stream = new FileStream(folderPath + "DataGridViewExport4.pdf", FileMode.Create))
             {
-                Document pdfDoc = new Document(PageSize.A4, 0f,0f,80f,0f);
+                Document pdfDoc = new Document(PageSize.A4, 0f, 0f, 80f, 0f);
                 PdfWriter.GetInstance(pdfDoc, stream);
                 pdfDoc.Open();
                 pdfDoc.Add(pcell);
@@ -208,6 +207,7 @@ namespace PharmacyManagement
         }
 
         private bool mouseDown;
+
         private Point lastLocation;
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)

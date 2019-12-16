@@ -61,6 +61,7 @@ namespace PharmacyManagement
         {
             this.WindowState = FormWindowState.Minimized;
         }
+
     }
 
     }

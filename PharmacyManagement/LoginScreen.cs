@@ -12,9 +12,9 @@ namespace PharmacyManagement
 {
     public partial class LoginScreen : Form
     {
-
         Employee emp = new Employee();
         Pharmacy p = new Pharmacy();
+
         public LoginScreen()
         {
             InitializeComponent();
@@ -36,7 +36,6 @@ namespace PharmacyManagement
             {
                 MessageBox.Show("Username or password is wrong!");
             }
-
         }
 
         private void button2_Click(object sender, EventArgs e)

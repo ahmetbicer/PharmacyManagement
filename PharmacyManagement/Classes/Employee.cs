@@ -15,7 +15,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     using (var cmd = new SQLiteCommand("SELECT Username,Password FROM employeeList WHERE Username=@Username AND Password = @Password", conn))
@@ -57,7 +57,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select PharmacyName from employeeList where Username = @Username";
@@ -81,7 +81,7 @@ namespace PharmacyManagement
 
         public void AddEmployee(string id,string name, string age, string gender, string salary, string username, string password, string pharmacyname)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = "insert into employeeList (EmployeeID,NameSurname,Age,Gender,Salary,Username,Password,PharmacyName) values(@EmployeeID,@NameSurname,@Age,@Gender,@Salary,@Username,@Password,@PharmacyName);";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@EmployeeID", id));
@@ -101,7 +101,7 @@ namespace PharmacyManagement
         {
             try
             {
-                using (var conn = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db"))
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
                     string query = "select EmployeeID,NameSurname,Age,Gender,Salary,Username from employeeList where PharmacyName = @PharmacyName";
@@ -124,7 +124,7 @@ namespace PharmacyManagement
 
         public void UpdateEmployee(string id, string name, string age, string gender, string salary, string username, string password)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = "update employeeList set NameSurname = @NameSurname, Age = @Age, Gender = @Gender, Salary = @Salary, Username = @Username, Password = @Password where EmployeeID = @EmployeeID";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@EmployeeID", id));
@@ -141,7 +141,7 @@ namespace PharmacyManagement
 
         public void deleteEmployee(string EmployeeID)
         {
-            SQLiteConnection con = new SQLiteConnection(@"data source = C:\Users\ahmtb\Desktop\pdb\pharmacy.db");
+            SQLiteConnection con = new SQLiteConnection(Properties.Settings.Default.DbPath);
             string query = "delete from employeeList where EmployeeID = @EmployeeID";
             SQLiteCommand cmd = new SQLiteCommand(query, con);
             cmd.Parameters.Add(new SQLiteParameter("@EmployeeID", EmployeeID));

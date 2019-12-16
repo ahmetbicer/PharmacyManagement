@@ -13,6 +13,7 @@ namespace PharmacyManagement
     public partial class BuyFactoryCheckout : Form
     {
         DataTable dt1;
+
         Medicine m = new Medicine();
         Sell s = new Sell();
         Buy b = new Buy();
@@ -21,6 +22,7 @@ namespace PharmacyManagement
 
         string user;
         string globalid;
+
         public BuyFactoryCheckout(DataTable dt, string username, string globalID)
         {
             InitializeComponent();
@@ -73,6 +75,7 @@ namespace PharmacyManagement
         }
 
         private bool mouseDown;
+
         private Point lastLocation;
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
