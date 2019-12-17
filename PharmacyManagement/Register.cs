@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Text.RegularExpressions;
+
 namespace PharmacyManagement
 {
     public partial class Register : Form
@@ -37,11 +39,21 @@ namespace PharmacyManagement
 
         private void button3_Click(object sender, EventArgs e)
         {
-            p.AddPharmacy(username.Text,email.Text,password.Text);
-            username.Clear();
-            email.Clear();
-            password.Clear();
-            approval.Text = "Registered Successfully";
+            Regex reg = new Regex(@"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$", RegexOptions.IgnoreCase);
+            if (reg.IsMatch(email.Text))
+            {
+                p.AddPharmacy(username.Text, email.Text, password.Text);
+                username.Clear();
+                email.Clear();
+                password.Clear();
+                approval.ForeColor = Color.Green;
+                approval.Text = "Registered Successfully";
+            }
+            else
+            {
+                approval.ForeColor = Color.Red;
+                approval.Text = "Invalid email adress.";
+            }
         }
 
         private void button3_KeyDown(object sender, KeyEventArgs e)

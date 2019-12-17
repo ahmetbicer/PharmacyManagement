@@ -25,7 +25,7 @@ namespace PharmacyManagement
         Medicine m = new Medicine();
         Sell s = new Sell();
         Logs l = new Logs();
-
+        Billing b = new Billing();
         public Checkout(DataTable dt, string patID, string globalID)
         {
             InitializeComponent();
@@ -113,9 +113,7 @@ namespace PharmacyManagement
                 }
             }
 
-            PdfPCell pcell = new PdfPCell();
-            pcell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-            pcell.AddElement(new Phrase("Billing Information"));
+            b.AddIncome("2019", "12", price.ToString(),globalid);
 
             PdfPTable pdfTable = new PdfPTable(dataGridView2.ColumnCount);
             pdfTable.DefaultCell.Padding = 3;
@@ -173,9 +171,6 @@ namespace PharmacyManagement
                 }
             }
 
-            PdfPCell pcell2 = new PdfPCell();
-            pcell2.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
-            pcell2.AddElement(new Phrase(price.ToString()));
 
             //Exporting to PDF
             string folderPath = @"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Bills\";
@@ -188,10 +183,9 @@ namespace PharmacyManagement
                 Document pdfDoc = new Document(PageSize.A4, 0f, 0f, 80f, 0f);
                 PdfWriter.GetInstance(pdfDoc, stream);
                 pdfDoc.Open();
-                pdfDoc.Add(pcell);
+                pdfDoc.AddHeader("Header", "trying");
                 pdfDoc.Add(pdfTable);
                 pdfDoc.Add(pdfTable2);
-                pdfDoc.Add(pcell2);
                 pdfDoc.Close();
                 stream.Close();
             }

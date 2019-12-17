@@ -245,7 +245,7 @@ namespace PharmacyManagement
                         SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
                         adp.Fill(dt);
                         string imgpath = dt.Rows[0].Field<string>(0);
-                        if(imgpath == null)
+                        if(imgpath == null || imgpath == "")
                         {
                             string eximg = @"C:\Users\ahmtb\source\repos\PharmacyManagement\PharmacyManagement\Assets\Images\defaultimage.png";
                             return eximg;
@@ -348,6 +348,47 @@ namespace PharmacyManagement
             {
                 //MessageBox.Show("Wrong Patient Id!");
                 return null;
+            }
+        }
+
+        public bool checkPrescription(string prescriptionID)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
+                {
+                    conn.Open();
+                    using (var cmd = new SQLiteCommand("SELECT prescriptionID FROM prescription WHERE prescriptionID = @prescriptionID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@prescriptionID", prescriptionID);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            var count = 0;
+                            while (reader.Read())
+                            {
+                                count = count + 1;
+
+                            }
+                            if (count == 1)
+                            {
+                                return true;
+                            }
+                            else if (count == 0)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
             }
         }
 

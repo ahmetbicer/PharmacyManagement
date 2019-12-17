@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,6 +21,7 @@ namespace PharmacyManagement
         MedicineFactories mf = new MedicineFactories();
         Employee emp = new Employee();
         Logs l = new Logs();
+        Billing b = new Billing();
 
         BarcodeScanner bs = new BarcodeScanner();
         OpenFileDialog open = new OpenFileDialog();
@@ -223,12 +225,27 @@ namespace PharmacyManagement
             if (tabControl7.SelectedTab == tabControl7.TabPages[0])
             {
                 viewLogs();
+                foreach (var series in chart1.Series)
+                {
+                    series.Points.Clear();
+                }
             }
 
             if (tabControl7.SelectedTab == tabControl7.TabPages[1])
             {
-                updatePharmacy();
+                getChartData();
             }
+
+            if (tabControl7.SelectedTab == tabControl7.TabPages[2])
+            {
+                updatePharmacy();
+                foreach (var series in chart1.Series)
+                {
+                    series.Points.Clear();
+                }
+            }
+            
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -257,7 +274,15 @@ namespace PharmacyManagement
 
         private void button3_Click(object sender, EventArgs e)
         {
-            m.AddMedicine(name.Text, stock.Text, price.Text, dose.Text, report.Text, definition.Text, ingredients.Text, imgpath, globalID);
+            if(comboBox1.SelectedIndex == 0)
+            {
+                m.AddMedicine(name.Text, stock.Text, price.Text, dose.Text, "1", definition.Text, ingredients.Text, imgpath, globalID);
+            }
+            if (comboBox1.SelectedIndex == 1)
+            {
+                m.AddMedicine(name.Text, stock.Text, price.Text, dose.Text, "0", definition.Text, ingredients.Text, imgpath, globalID);
+            }
+
             if (isEmployee)
             {
                 l.AddLogs(String.Format("{0}  -  '{1}' added the medicine '{2}'", DateTime.Now.ToString(), employeeName, name.Text), globalID);
@@ -271,9 +296,9 @@ namespace PharmacyManagement
             stock.Clear();
             price.Clear();
             dose.Clear();
-            report.Clear();
             definition.Clear();
             ingredients.Clear();
+            comboBox1.ResetText();
             open.Reset();
             pictureBox3.Image = null;
             imgpath = "";
@@ -290,7 +315,15 @@ namespace PharmacyManagement
 
         private void button2_Click(object sender, EventArgs e)
         {
-            p.addPatient(ID.Text, pat_name.Text, pat_surname.Text, pat_age.Text, pat_city.Text, pat_report.Text, globalID);
+            if(comboBox3.SelectedIndex == 0)
+            {
+                p.addPatient(ID.Text, pat_name.Text, pat_surname.Text, pat_age.Text, pat_city.Text, "1", globalID);
+            }
+            if (comboBox3.SelectedIndex == 1)
+            {
+                p.addPatient(ID.Text, pat_name.Text, pat_surname.Text, pat_age.Text, pat_city.Text, "0", globalID);
+            }
+            
             if (isEmployee)
             {
                 l.AddLogs(String.Format("{0}  -  '{1}' added the patient '{2}'", DateTime.Now.ToString(), employeeName, pat_name.Text), globalID);
@@ -305,7 +338,7 @@ namespace PharmacyManagement
             pat_surname.Clear();
             pat_age.Clear();
             pat_city.Clear();
-            pat_report.Clear();
+            comboBox3.ResetText();
             pat_approval.Text = "Added Successfully";
         }
 
@@ -347,7 +380,15 @@ namespace PharmacyManagement
             textBox5.Text = selectedRow.Cells[3].Value.ToString();
             richTextBox2.Text = selectedRow.Cells[4].Value.ToString();
             richTextBox1.Text = selectedRow.Cells[5].Value.ToString();
-            textBox2.Text = selectedRow.Cells[6].Value.ToString();
+            if(selectedRow.Cells[6].Value.ToString() == "1")
+            {
+                comboBox2.SelectedIndex = 0;
+            }
+            if (selectedRow.Cells[6].Value.ToString() == "0")
+            {
+                comboBox2.SelectedIndex = 1;
+            }
+            //textBox2.Text = selectedRow.Cells[6].Value.ToString();
             tabControl2.SelectedIndex = 2;
         }
 
@@ -358,11 +399,26 @@ namespace PharmacyManagement
             int indexInt = index[0] + 1;
             if (imgpath2 == "")
             {
-                m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, textBox2.Text, globalID);
+                if(comboBox2.SelectedIndex == 0)
+                {
+                    m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, "1", globalID);
+                }
+                if (comboBox2.SelectedIndex == 1)
+                {
+                    m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, "0", globalID);
+                }
+
             }
             else
             {
-                m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, textBox2.Text, imgpath2, globalID);
+                if (comboBox2.SelectedIndex == 0)
+                {
+                    m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, "1", imgpath2, globalID);
+                }
+                if (comboBox2.SelectedIndex == 1)
+                {
+                    m.UpdateMedicine(indexInt.ToString(), textBox4.Text, textBox16.Text, textBox3.Text, textBox5.Text, richTextBox2.Text, richTextBox1.Text, "0", imgpath2, globalID);
+                }
             }
 
             if (isEmployee)
@@ -381,7 +437,7 @@ namespace PharmacyManagement
             textBox5.Clear();
             richTextBox2.Clear();
             richTextBox1.Clear();
-            textBox2.Clear();
+            comboBox2.ResetText();
             pictureBox5.Image = null;
             imgpath2 = "";
             label17.Text = "Updated Successfully";
@@ -404,14 +460,20 @@ namespace PharmacyManagement
             string patSurname = selectedRow.Cells[3].Value.ToString();
             string patAge = selectedRow.Cells[4].Value.ToString();
             string patCity = selectedRow.Cells[5].Value.ToString();
-            string patHaveReport = selectedRow.Cells[6].Value.ToString();
+            if(selectedRow.Cells[6].Value.ToString() == "1")
+            {
+                comboBox4.SelectedIndex = 0;
+            }
+            if (selectedRow.Cells[6].Value.ToString() == "0")
+            {
+                comboBox4.SelectedIndex = 1;
+            }
 
             textBox7.Text = patID;
             textBox8.Text = patName;
             textBox10.Text = patSurname;
             textBox12.Text = patAge;
             textBox11.Text = patCity;
-            textBox9.Text = patHaveReport;
 
 
             tabControl3.SelectedIndex = 2;
@@ -426,8 +488,15 @@ namespace PharmacyManagement
             string patSurname = textBox10.Text;
             string patAge = textBox12.Text;
             string patCity = textBox11.Text;
-            string patHaveReport = textBox9.Text;
-            p.updatePatient(patPatId, patID, patName, patSurname, patAge, patCity, patHaveReport, globalID);
+            if(comboBox4.SelectedIndex == 0)
+            {
+                p.updatePatient(patPatId, patID, patName, patSurname, patAge, patCity, "1", globalID);
+            }
+            if (comboBox4.SelectedIndex == 1)
+            {
+                p.updatePatient(patPatId, patID, patName, patSurname, patAge, patCity, "0", globalID);
+            }
+            
             if (isEmployee)
             {
                 l.AddLogs(String.Format("{0}  -  '{1}' updated the patient '{2}'", DateTime.Now.ToString(), employeeName, textBox8.Text), globalID);
@@ -443,7 +512,7 @@ namespace PharmacyManagement
             textBox10.Clear();
             textBox12.Clear();
             textBox11.Clear();
-            textBox9.Clear();
+            comboBox4.ResetText();
             label22.Text = "Updated Successfully";
         }
 
@@ -461,6 +530,8 @@ namespace PharmacyManagement
                 l.AddLogs(String.Format("{0}  -  '{1}' deleted the patient '{2}'", DateTime.Now.ToString(), globalID, patPatId), globalID);
 
             }
+            tabControl3.SelectedIndex = 1;
+            tabControl3.SelectedIndex = 0;
         }
 
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -1630,11 +1701,22 @@ namespace PharmacyManagement
 
         private void button27_Click(object sender, EventArgs e)
         {
-            ph.updatePharmacy(email.Text, password.Text, globalID);
-            tabControl7.SelectedIndex = 2;
-            tabControl7.SelectedIndex = 1;
-            label74.ForeColor = Color.Green;
-            label74.Text = "Updated Successfully";
+            Regex reg = new Regex(@"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$", RegexOptions.IgnoreCase);
+            if (reg.IsMatch(email.Text))
+            {
+                ph.updatePharmacy(email.Text, password.Text, globalID);
+                tabControl7.SelectedIndex = 2;
+                tabControl7.SelectedIndex = 1;
+                label74.ForeColor = Color.Green;
+                label74.Text = "Updated Successfully";
+            }
+            else
+            {
+                label74.ForeColor = Color.Red;
+                label74.Text = "Invalid email adress!";
+            }
+                
+            
         }
 
         private void viewLogs()
@@ -1655,7 +1737,15 @@ namespace PharmacyManagement
                 string[] tokens = val.Split(',');
                 name.Text = tokens[0];
                 dose.Text = tokens[1];
-                report.Text = tokens[2];
+                if(tokens[2] == "1")
+                {
+                    comboBox1.SelectedIndex = 0;
+                }
+                if (tokens[2] == "0")
+                {
+                    comboBox1.SelectedIndex = 1;
+                }
+                //report.Text = tokens[2];
                 definition.Text = tokens[3];
                 ingredients.Text = tokens[4];
             }
@@ -1663,30 +1753,38 @@ namespace PharmacyManagement
 
         private void button15_Click(object sender, EventArgs e)
         {
-            DataTable dt16 = m.ReadPrescription(textBox15.Text, globalID);
-            string patientid = m.PrescriptionPatient(textBox15.Text);
-
-            if (isEmployee)
+            if (m.checkPrescription(textBox15.Text))
             {
+                DataTable dt16 = m.ReadPrescription(textBox15.Text, globalID);
+                string patientid = m.PrescriptionPatient(textBox15.Text);
 
-                Checkout c = new Checkout(dt16, patientid, employeeName, globalID);
+                if (isEmployee)
+                {
 
-                c.StartPosition = FormStartPosition.Manual;
-                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
-                c.ShowDialog();
+                    Checkout c = new Checkout(dt16, patientid, employeeName, globalID);
 
-                dt3.Rows.Clear();
+                    c.StartPosition = FormStartPosition.Manual;
+                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.ShowDialog();
+
+                    dt3.Rows.Clear();
+                }
+                else
+                {
+                    Checkout c = new Checkout(dt16, patientid, globalID);
+
+                    c.StartPosition = FormStartPosition.Manual;
+                    c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+                    c.ShowDialog();
+
+                    dt3.Rows.Clear();
+                }
             }
             else
             {
-                Checkout c = new Checkout(dt16, patientid, globalID);
-
-                c.StartPosition = FormStartPosition.Manual;
-                c.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
-                c.ShowDialog();
-
-                dt3.Rows.Clear();
+                MessageBox.Show("Can't found a match for this prescriptionID!");
             }
+            
         }
 
         private void button30_Click(object sender, EventArgs e)
@@ -1723,6 +1821,109 @@ namespace PharmacyManagement
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
+        }
+
+        private void price_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void stock_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void report_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox16_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void ID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void pat_age_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void pat_report_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox7_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox12_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox9_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox24_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox21_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox34_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox36_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox33_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void getChartData()
+        {
+            DataTable dt1 = b.getGraphData("2019", "11");
+            DataTable dt2 = b.getGraphData("2019", "12");
+
+            chart1.Series["Expense"].Points.AddXY(11, dt1.Rows[0].ItemArray[1]);
+            chart1.Series["Income"].Points.AddXY(11, dt1.Rows[0].ItemArray[0]);
+
+            chart1.Series["Expense"].Points.AddXY(12, dt2.Rows[0].ItemArray[1]);
+            chart1.Series["Income"].Points.AddXY(12, dt2.Rows[0].ItemArray[0]);
+
+            chart1.Series["Expense"]["PixelPointWidth"] = "80";
+            chart1.Series["Income"]["PixelPointWidth"] = "80";
+
+            chart1.Series["Expense"].IsValueShownAsLabel = true;
+            chart1.Series["Income"].IsValueShownAsLabel = true;
         }
     }
 }

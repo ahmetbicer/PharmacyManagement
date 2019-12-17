@@ -19,6 +19,7 @@ namespace PharmacyManagement
         Buy b = new Buy();
         MedicineFactories mf = new MedicineFactories();
         Logs l = new Logs();
+        Billing bl = new Billing();
 
         string user;
         string globalid;
@@ -31,12 +32,11 @@ namespace PharmacyManagement
             globalid = globalID;
         }
 
+        float price = 0;
         private void BuyFactoryCheckout_Load(object sender, EventArgs e)
         {
             DataTable dt2 = mf.checkoutFactory(user);
             dataGridView2.DataSource = dt2;
-            float price = 0;
-
             dataGridView1.DataSource = dt1;
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -66,6 +66,8 @@ namespace PharmacyManagement
                 b.BuyMedicine(row.Cells[0].Value.ToString(), int.Parse(row.Cells[1].Value.ToString()), int.Parse(row.Cells[2].Value.ToString()), globalid);
                 l.AddLogs(String.Format("{0}  -  '{1}' buy the medicine '{2}' from factory  '{3}'", DateTime.Now.ToString(), globalid, row.Cells[0].Value.ToString(), user), globalid);
             }
+
+            bl.AddExpense("2019", "12", price.ToString(), globalid);
             this.Close();
         }
 

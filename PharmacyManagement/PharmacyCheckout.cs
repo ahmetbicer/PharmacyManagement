@@ -17,6 +17,7 @@ namespace PharmacyManagement
         Sell s = new Sell();
         Pharmacy ph = new Pharmacy();
         Logs l = new Logs();
+        Billing b = new Billing();
 
         string user;
         string globalid;
@@ -40,12 +41,13 @@ namespace PharmacyManagement
             empName = empUsername;
             isEmployee = true;
         }
+        float price = 0;
 
         private void PharmacyCheckout_Load(object sender, EventArgs e)
         {
             DataTable dt2 = ph.checkoutPharmacy(user);
             dataGridView2.DataSource = dt2;
-            float price = 0;
+            
 
             dataGridView1.DataSource = dt1;
             DataGridViewButtonColumn col = new DataGridViewButtonColumn();
@@ -105,6 +107,8 @@ namespace PharmacyManagement
                     l.AddLogs(String.Format("{0}  -  '{1}' sell the medicine '{2}' to pharmacy  '{3}'", DateTime.Now.ToString(), globalid, row.Cells[0].Value.ToString(), user), globalid);
                 }
             }
+
+            b.AddIncome("2019", "12", price.ToString(), globalid);
             this.Close();
         }
 
