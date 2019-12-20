@@ -14,7 +14,6 @@ namespace PharmacyManagement
     {
         Employee emp = new Employee();
         Pharmacy p = new Pharmacy();
-
         public LoginScreen()
         {
             InitializeComponent();
@@ -111,6 +110,16 @@ namespace PharmacyManagement
             {
                 button2_Click(this, new EventArgs());
             }
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var f = new ForgotPassword();
+            f.Closed += (s, args) => this.Close();
+            f.StartPosition = FormStartPosition.Manual;
+            f.Location = new Point(this.Location.X, this.Location.Y);
+            f.Show();
         }
     }
 }

@@ -11,14 +11,14 @@ namespace PharmacyManagement
 {
     public class Billing
     {
-        public DataTable getGraphData(string year, string month)
+        public DataTable getGraphData(string year, string month,string globalID)
         {
             try
             {
                 using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
                 {
                     conn.Open();
-                    string query = String.Format("select sum(Income), sum(Expense) from incomeandexpense_ahmet where Year = @Year and Month = @Month");
+                    string query = String.Format("select sum(Income), sum(Expense) from incomeandexpense_{0} where Year = @Year and Month = @Month",globalID);
                     using (var cmd = new SQLiteCommand(query, conn))
                     {
                         cmd.Parameters.Add(new SQLiteParameter("@Year", year));

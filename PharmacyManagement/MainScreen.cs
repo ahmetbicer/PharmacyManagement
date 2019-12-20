@@ -1910,8 +1910,8 @@ namespace PharmacyManagement
 
         private void getChartData()
         {
-            DataTable dt1 = b.getGraphData("2019", "11");
-            DataTable dt2 = b.getGraphData("2019", "12");
+            DataTable dt1 = b.getGraphData("2019", "11",globalID);
+            DataTable dt2 = b.getGraphData("2019", "12",globalID);
 
             chart1.Series["Expense"].Points.AddXY(11, dt1.Rows[0].ItemArray[1]);
             chart1.Series["Income"].Points.AddXY(11, dt1.Rows[0].ItemArray[0]);

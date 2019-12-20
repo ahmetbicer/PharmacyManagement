@@ -198,5 +198,32 @@ namespace PharmacyManagement
             cmd.ExecuteNonQuery();
         }
 
+        public string GetPassword(string email)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(Properties.Settings.Default.DbPath))
+                {
+                    conn.Open();
+                    string query = String.Format("select Password from pharmacyList where Email = @Email");
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@Email", email));
+                        DataTable dt = new DataTable();
+                        SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
+                        adp.Fill(dt);
+                        string pass = dt.Rows[0].ItemArray[0].ToString();
+                        return pass;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Wrong Patient Id!");
+                return null;
+            }
+        }
+
     }
 }
